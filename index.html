@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Chelsea Autoworx | Independent BMW & MINI Specialist, Fulham</title>
+    <meta name="description"
+        content="Independent BMW & MINI specialist in Fulham, London. Servicing, diagnostics, MOT and repairs since 2007.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <script
+        type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+    <style>
+        /* Tokens */
+        :root {
+            --bg: #0a0c0f;
+            --panel: #12161b;
+            --steel: #8b96a3;
+            --blue: #2a7de1;
+            --blue2: #5fb0ff;
+            --plate: #f2c230;
+            --line: rgba(255, 255, 255, .1);
+            --glass: rgba(255, 255, 255, .06);
+            --r-card: 28px;
+            --r-panel: 36px;
+            --r-img: 24px;
+            --pill: 999px;
+            --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: #050607;
+            color: #e8edf2;
+            font: 400 16px/1.6 Inter, system-ui, sans-serif;
+            overflow-x: hidden
+        }
+
+        h1,
+        h2,
+        h3,
+        .oswald {
+            font-family: Oswald, sans-serif;
+            text-transform: uppercase;
+            font-weight: 600;
+            line-height: 1
+        }
+
+        a {
+            color: inherit
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--blue2);
+            outline-offset: 3px
+        }
+
+        img {
+            border-radius: var(--r-img);
+            max-width: 100%
+        }
+
+        .wrap {
+            padding: 16px
+        }
+
+        .sec {
+            padding: clamp(56px, 9vw, 120px) clamp(20px, 5vw, 72px);
+            max-width: 1300px;
+            margin: auto
+        }
+
+        h2 {
+            font-size: clamp(32px, 4.6vw, 64px);
+            max-width: 15ch;
+            margin-bottom: clamp(28px, 4vw, 56px)
+        }
+
+        .muted {
+            color: var(--steel)
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 24px;
+            border-radius: var(--pill);
+            font: 600 15px Inter;
+            text-decoration: none;
+            color: #fff;
+            border: 1px solid transparent;
+            cursor: pointer;
+            will-change: transform
+        }
+
+        .btn.blue {
+            background: var(--blue);
+            box-shadow: 0 10px 30px -8px rgba(42, 125, 225, .7)
+        }
+
+        .btn.ghost {
+            background: var(--glass);
+            border-color: rgba(255, 255, 255, .22);
+            backdrop-filter: blur(10px)
+        }
+
+        .grain {
+            position: relative
+        }
+
+        .grain::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: var(--grain);
+            opacity: .06;
+            pointer-events: none
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--r-card);
+            padding: 28px;
+            position: relative;
+            transition: transform .4s, box-shadow .4s, border-color .4s
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(95, 176, 255, .4);
+            box-shadow: 0 20px 60px -20px rgba(42, 125, 225, .5)
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            height: min(calc(100svh - 32px), 820px);
+            min-height: 600px;
+            border-radius: var(--r-panel);
+            overflow: hidden;
+            background: var(--bg);
+            box-shadow: inset 0 0 0 1px var(--line);
+            isolation: isolate;
+            user-select: none;
+            -webkit-user-select: none
+        }
+
+        .hero>* {
+            position: absolute
+        }
+
+        .glow {
+            inset: 0;
+            z-index: 0;
+            background: radial-gradient(var(--gw, 50%) var(--gh, 55%) at var(--gx, 65%) var(--gy, 66%), rgba(42, 125, 225, .3), transparent 70%), radial-gradient(35% 35% at 6% 0%, rgba(139, 150, 163, .15), transparent 70%)
+        }
+
+        .dots {
+            inset: 0;
+            opacity: .45;
+            background-image: radial-gradient(rgba(255, 255, 255, .16) 1px, transparent 1.4px);
+            background-size: 26px 26px;
+            -webkit-mask-image: radial-gradient(ellipse 70% 70% at 60% 55%, #000 10%, transparent 75%);
+            mask-image: radial-gradient(ellipse 70% 70% at 60% 55%, #000 10%, transparent 75%)
+        }
+
+        .streaks {
+            inset: 0;
+            overflow: hidden
+        }
+
+        .streaks i {
+            position: absolute;
+            height: 2px;
+            width: 55%;
+            background: linear-gradient(90deg, transparent, rgba(95, 176, 255, .3), transparent);
+            transform: rotate(-24deg)
+        }
+
+        .word {
+            right: 2%;
+            top: 16%;
+            font: 700 clamp(90px, 17vw, 250px)/.88 Oswald;
+            text-align: right;
+            opacity: .11;
+            pointer-events: none;
+            color: transparent;
+            -webkit-text-stroke: 2px #5fb0ff;
+            z-index: 1
+        }
+
+        .gear {
+            right: 14%;
+            top: 6%;
+            width: clamp(200px, 28vw, 420px);
+            opacity: .1;
+            pointer-events: none;
+            border-radius: 0;
+            animation: spin 60s linear infinite
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .shadow {
+            left: 50%;
+            top: 80%;
+            width: 44%;
+            height: 7%;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, .8);
+            filter: blur(18px);
+            pointer-events: none;
+            z-index: 1
+        }
+
+        #cv {
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            touch-action: pan-y;
+            opacity: 0
+        }
+
+        #fallback {
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: 69.5% 64%;
+            transform: scale(1.12);
+            transform-origin: 69.5% 64%;
+            z-index: 2;
+            display: none;
+            border-radius: 0
+        }
+
+        #load {
+            left: 69.5%;
+            top: 64%;
+            width: 34px;
+            height: 34px;
+            border: 2px solid rgba(95, 176, 255, .2);
+            border-top-color: var(--blue2);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            z-index: 2;
+            translate: -50% -50%
+        }
+
+        .overlay {
+            inset: 0;
+            z-index: 5;
+            pointer-events: none
+        }
+
+        .overlay svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%
+        }
+
+        .chip {
+            position: absolute;
+            padding: 8px 16px;
+            border-radius: var(--pill);
+            background: rgba(18, 22, 27, .75);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(95, 176, 255, .4);
+            font: 600 13px Inter;
+            white-space: nowrap;
+            opacity: 0
+        }
+
+        .dragtip {
+            position: absolute;
+            padding: 6px 14px;
+            border-radius: var(--pill);
+            background: var(--glass);
+            border: 1px solid var(--line);
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity .3s
+        }
+
+        nav {
+            z-index: 10;
+            top: 18px;
+            left: 50%;
+            translate: -50% 0;
+            width: min(94%, 1100px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 8px 8px 12px;
+            border-radius: var(--pill);
+            background: var(--glass);
+            border: 1px solid var(--line);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px)
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font: 600 20px Oswald;
+            text-transform: uppercase;
+            color: #fff;
+            letter-spacing: .04em
+        }
+
+        .logo img {
+            width: 42px;
+            height: 42px;
+            flex: none;
+            border-radius: 50%;
+            object-fit: cover;
+            overflow: hidden
+        }
+
+        .logo b {
+            color: var(--blue2);
+            font-weight: 600
+        }
+
+        nav ul {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            padding: 0;
+            font-size: 14px;
+            color: #c9d2dc
+        }
+
+        nav ul a {
+            text-decoration: none
+        }
+
+        nav ul a:hover {
+            color: #fff
+        }
+
+        .copy {
+            z-index: 6;
+            left: clamp(20px, 4vw, 56px);
+            top: 46%;
+            translate: 0 -50%;
+            width: min(58%, 780px);
+            margin-top: 0
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 16px;
+            border-radius: var(--pill);
+            background: var(--glass);
+            border: 1px solid var(--line);
+            font-size: 13px;
+            color: #c9d2dc;
+            margin-bottom: 22px
+        }
+
+        .tag i {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--plate)
+        }
+
+        h1 {
+            font-size: clamp(40px, 5.4vw, 80px);
+            line-height: .95
+        }
+
+        h1 span {
+            display: block;
+            overflow: hidden
+        }
+
+        h1 span b {
+            display: block;
+            font-weight: 600
+        }
+
+        h1 span:last-child b {
+            color: var(--blue)
+        }
+
+        .sub {
+            max-width: 44ch;
+            margin: 22px 0 28px;
+            color: #b6c0cb;
+            font-size: clamp(15px, 1.3vw, 18px)
+        }
+
+        .btns {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .stats {
+            z-index: 6;
+            left: clamp(20px, 4vw, 56px);
+            bottom: 24px;
+            display: flex;
+            gap: clamp(16px, 3vw, 40px);
+            padding: 14px 28px;
+            border-radius: var(--pill);
+            background: var(--glass);
+            border: 1px solid var(--line);
+            backdrop-filter: blur(12px)
+        }
+
+        .stats div {
+            font-size: 12px;
+            color: var(--steel);
+            line-height: 1.3
+        }
+
+        .stats strong {
+            display: block;
+            font: 600 24px Oswald;
+            color: #fff
+        }
+
+        .scroll {
+            z-index: 6;
+            left: 50%;
+            bottom: 24px;
+            translate: -50% 0;
+            padding: 7px 18px;
+            border-radius: var(--pill);
+            border: 1px solid var(--line);
+            font-size: 12px;
+            color: var(--steel)
+        }
+
+        /* Services */
+        .bento {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px
+        }
+
+        .bento .card h3 {
+            font-size: 24px;
+            margin-bottom: 10px
+        }
+
+        .bento p {
+            color: var(--steel);
+            font-size: 15px
+        }
+
+        .b1 {
+            grid-column: span 3;
+            grid-row: span 2;
+            background: linear-gradient(160deg, #16222f, var(--panel) 60%)
+        }
+
+        .b1 h3 {
+            font-size: 44px !important
+        }
+
+        .b2 {
+            grid-column: span 3
+        }
+
+        .b3 {
+            grid-column: span 2
+        }
+
+        .b4 {
+            grid-column: span 2
+        }
+
+        .b5 {
+            grid-column: span 2
+        }
+
+        .b6 {
+            grid-column: span 3
+        }
+
+        .b7 {
+            grid-column: span 3
+        }
+
+        .b8 {
+            grid-column: span 6;
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            background: var(--blue);
+            border-color: transparent
+        }
+
+        .b8 p {
+            color: #e6f1ff
+        }
+
+        .b8 .btn {
+            background: #0a0c0f
+        }
+
+        /* Split panels */
+        .split {
+            display: grid;
+            gap: 20px
+        }
+
+        .pn {
+            border-radius: var(--r-panel);
+            padding: clamp(28px, 5vw, 64px);
+            position: relative;
+            overflow: hidden;
+            min-height: 420px
+        }
+
+        .pn .big {
+            position: absolute;
+            right: -2%;
+            bottom: -6%;
+            font: 700 clamp(120px, 22vw, 320px)/1 Oswald;
+            color: transparent;
+            pointer-events: none;
+            white-space: nowrap
+        }
+
+        .pn h2 {
+            max-width: 12ch;
+            position: relative
+        }
+
+        .pn ul {
+            list-style: none;
+            padding: 0;
+            position: relative;
+            margin-bottom: 28px;
+            display: grid;
+            gap: 8px
+        }
+
+        .pn li::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 12px;
+            background: currentColor
+        }
+
+        .pn .btn {
+            position: relative
+        }
+
+        #bmw.pn {
+            background: var(--bg);
+            border: 1.5px solid var(--blue)
+        }
+
+        #bmw .big {
+            -webkit-text-stroke: 2px rgba(95, 176, 255, .35)
+        }
+
+        #mini.pn {
+            background: #c3cbd4;
+            color: #10151a;
+            width: 88%;
+            margin-left: auto
+        }
+
+        #mini h2 {
+            color: #10151a
+        }
+
+        #mini .big {
+            -webkit-text-stroke: 2px rgba(10, 12, 15, .18)
+        }
+
+        #mini .btn {
+            background: #10151a
+        }
+
+        /* Why */
+        .why {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 48px;
+            align-items: start
+        }
+
+        .why li {
+            list-style: none;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: 18px
+        }
+
+        .why ul {
+            padding: 0
+        }
+
+        .hl {
+            border-radius: var(--r-panel);
+            padding: 40px;
+            min-height: 520px;
+            background: linear-gradient(170deg, #1b3a63, var(--panel) 70%);
+            border: 1px solid rgba(95, 176, 255, .3);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            gap: 16px;
+            position: sticky;
+            top: 24px
+        }
+
+        .hl h3 {
+            font-size: clamp(34px, 4vw, 54px)
+        }
+
+        .plate {
+            align-self: flex-start;
+            background: var(--plate);
+            color: #111;
+            font: 700 20px Oswald;
+            letter-spacing: .12em;
+            padding: 4px 16px;
+            border-radius: 10px;
+            border: 2px solid #111;
+            box-shadow: 0 0 0 2px var(--plate)
+        }
+
+        .strip {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 24px;
+            padding: 32px 48px;
+            border-radius: var(--pill);
+            background: var(--glass);
+            border: 1px solid var(--line);
+            backdrop-filter: blur(12px);
+            margin: 0 clamp(16px, 4vw, 48px)
+        }
+
+        .strip strong {
+            display: block;
+            font: 600 clamp(32px, 4vw, 52px) Oswald
+        }
+
+        .strip span {
+            font-size: 13px;
+            color: var(--steel)
+        }
+
+        /* About */
+        .about {
+            display: grid;
+            grid-template-columns: .9fr 1.1fr;
+            gap: clamp(24px, 5vw, 72px);
+            align-items: center
+        }
+
+        .por {
+            aspect-ratio: 4/5;
+            border-radius: var(--r-panel);
+            background: linear-gradient(160deg, #243244, #12161b);
+            object-fit: cover;
+            width: 100%
+        }
+
+        .quote {
+            background: var(--blue);
+            border-radius: var(--r-card);
+            padding: 28px;
+            font: 500 20px/1.35 Inter;
+            margin: -70px 0 0 -40px;
+            position: relative;
+            max-width: 360px
+        }
+
+        /* Work */
+        .work {
+            overflow: hidden;
+            padding: clamp(56px, 8vw, 100px) 0 clamp(56px, 8vw, 100px) clamp(20px, 5vw, 72px)
+        }
+
+        .work h2 {
+            margin-bottom: 28px
+        }
+
+        .track {
+            display: flex;
+            gap: 20px;
+            width: max-content;
+            padding-right: 10vw
+        }
+
+        .reel {
+            width: min(70vw, 300px);
+            aspect-ratio: 9/16;
+            border-radius: var(--r-card);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            overflow: hidden
+        }
+
+        .reel:nth-child(odd) {
+            margin-top: 40px
+        }
+
+        .reel b {
+            font: 600 22px Oswald;
+            text-transform: uppercase
+        }
+
+        .reel span {
+            font-size: 13px;
+            color: #cfd8e2
+        }
+
+        /* Steps */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            position: relative
+        }
+
+        .steps .card:nth-child(2) {
+            margin-top: 48px
+        }
+
+        .steps .card:nth-child(3) {
+            margin-top: 16px
+        }
+
+        .steps .card:nth-child(4) {
+            margin-top: 64px
+        }
+
+        .steps svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none
+        }
+
+        .steps .card {
+            z-index: 1
+        }
+
+        .steps h3 {
+            font-size: 22px;
+            margin-bottom: 8px
+        }
+
+        /* Reviews */
+        .mq {
+            overflow: hidden
+        }
+
+        .mqt {
+            display: flex;
+            gap: 16px;
+            width: max-content;
+            animation: mq 50s linear infinite
+        }
+
+        .mq:hover .mqt {
+            animation-play-state: paused
+        }
+
+        @keyframes mq {
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        .rev {
+            width: 320px;
+            flex: none;
+            white-space: normal
+        }
+
+        .rev:nth-child(even) {
+            margin-top: 36px
+        }
+
+        .rev small {
+            color: var(--steel)
+        }
+
+        /* FAQ */
+        .faq details,
+        .faq .q {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--r-card);
+            margin-bottom: 12px;
+            overflow: hidden
+        }
+
+        .faq button {
+            all: unset;
+            box-sizing: border-box;
+            width: 100%;
+            padding: 22px 28px;
+            cursor: pointer;
+            font: 600 18px Inter;
+            display: flex;
+            justify-content: space-between;
+            gap: 16px
+        }
+
+        .faq button:focus-visible {
+            outline: 2px solid var(--blue2);
+            outline-offset: -4px;
+            border-radius: var(--r-card)
+        }
+
+        .faq .a {
+            height: 0;
+            overflow: hidden;
+            color: var(--steel)
+        }
+
+        .faq .a p {
+            padding: 0 28px 22px
+        }
+
+        .faq .q[aria-expanded],
+        .faq .q {}
+
+        /* Contact */
+        .contact {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 24px
+        }
+
+        form {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--r-panel);
+            padding: clamp(24px, 4vw, 40px);
+            display: grid;
+            gap: 14px
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            background: #0a0c0f;
+            border: 1px solid var(--line);
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: var(--pill);
+            font: inherit
+        }
+
+        textarea {
+            border-radius: 24px;
+            min-height: 110px;
+            resize: vertical
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px
+        }
+
+        .map {
+            border-radius: var(--r-panel);
+            min-height: 240px;
+            background: radial-gradient(circle at 50% 50%, rgba(42, 125, 225, .25), transparent 60%), var(--panel);
+            background-size: auto;
+            border: 1px solid var(--line);
+            display: grid;
+            place-items: center;
+            color: var(--steel);
+            margin-bottom: 20px
+        }
+
+        .contact address {
+            font-style: normal;
+            display: grid;
+            gap: 10px
+        }
+
+        footer {
+            background: var(--panel);
+            border-radius: var(--r-panel) var(--r-panel) 0 0;
+            margin-top: 80px;
+            padding: 48px clamp(20px, 5vw, 72px) 32px
+        }
+
+        footer .in {
+            max-width: 1300px;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        footer nav {
+            all: unset;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 14px
+        }
+
+        footer small {
+            display: block;
+            max-width: 1300px;
+            margin: 32px auto 0;
+            color: var(--steel)
+        }
+
+        @media(max-width:1000px) {
+
+            .why,
+            .about,
+            .contact {
+                grid-template-columns: 1fr
+            }
+
+            .hl {
+                position: static;
+                min-height: 340px
+            }
+
+            .steps {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .bento>* {
+                grid-column: span 3 !important
+            }
+
+            .b1 {
+                grid-row: auto
+            }
+        }
+
+        @media(max-width:900px) {
+            nav ul {
+                display: none
+            }
+
+            .copy {
+                width: calc(100% - 40px);
+                top: 96px;
+                translate: 0 0;
+                margin-top: 0
+            }
+
+            .word {
+                top: 40%
+            }
+
+            .stats {
+                left: 16px;
+                right: 16px;
+                padding: 12px 18px;
+                justify-content: space-between
+            }
+        }
+
+        @media(max-width:700px) {
+            .logo span {
+                display: none
+            }
+
+            .bento>*,
+            .steps>* {
+                grid-column: 1/-1 !important
+            }
+
+            .steps {
+                grid-template-columns: 1fr
+            }
+
+            .steps .card {
+                margin-top: 0 !important
+            }
+
+            #mini.pn {
+                width: 100%
+            }
+
+            .row {
+                grid-template-columns: 1fr
+            }
+
+            .strip {
+                border-radius: var(--r-panel);
+                padding: 28px
+            }
+        }
+
+        @media(max-width:1100px) {
+            .scroll {
+                display: none
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation: none !important;
+                scroll-behavior: auto !important
+            }
+        }
+    </style>
+</head>
+
+<body id="top">
+    <div class="wrap">
+        <header class="hero grain" id="hero">
+            <div class="glow"></div>
+            <div class="dots"></div>
+            <div class="streaks" aria-hidden="true"><i style="left:-10%;top:55%"></i><i style="left:20%;top:80%"></i><i
+                    style="left:40%;top:30%"></i></div>
+            <div class="word" aria-hidden="true">CHELSEA<br>AUTOWORX</div>
+            <svg class="gear" viewBox="0 0 100 100" aria-hidden="true">
+                <g fill="none" stroke="#5fb0ff" stroke-width="2">
+                    <circle cx="50" cy="50" r="30" />
+                    <circle cx="50" cy="50" r="12" />
+                    <path stroke-width="9" stroke-dasharray="6 6.8"
+                        d="M50 50m-38 0a38 38 0 1 0 76 0a38 38 0 1 0-76 0" />
+                </g>
+            </svg>
+            <div class="shadow" id="shadow"></div>
+            <img id="fallback" src="assets/hero-car.png" alt="BMW M3 in three-quarter front view" loading="lazy">
+            <div id="load" aria-hidden="true"></div>
+            <canvas id="cv" aria-label="Interactive 3D BMW M3. Click and drag to rotate." role="img"></canvas>
+            <div class="overlay" id="ov" aria-hidden="true">
+                <svg>
+                    <line id="l1" stroke="#5fb0ff" stroke-width="1.5" />
+                    <circle id="d1" r="5" fill="#5fb0ff" />
+                    <line id="l2" stroke="#5fb0ff" stroke-width="1.5" />
+                    <circle id="d2" r="5" fill="#5fb0ff" />
+                </svg>
+                <span class="chip" id="c1">Genuine BMW Parts</span><span class="chip" id="c2">£75 + VAT
+                    Diagnostics</span><span class="dragtip" id="tip">Click &amp; drag to rotate</span>
+            </div>
+            <nav aria-label="Main"><a class="logo" href="#top"><img src="assets/logo.png" alt="Chelsea Autoworx logo"
+                        width="42" height="42"
+                        onerror="var f=['assets/Logo.png','assets/logo.jpg','assets/logo.webp','assets/logo.svg'],i=+(this.dataset.i||0);if(i<f.length){this.dataset.i=i+1;this.src=f[i]}else{console.warn('logo not found at assets/logo.png');this.style.display='none'}"><span>Chelsea
+                        <b>Autoworx</b></span></a>
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#bmw">BMW</a></li>
+                    <li><a href="#mini">MINI</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a class="btn blue mag" href="#contact">Book a Service</a>
+            </nav>
+            <div class="copy" id="copy">
+                <p class="tag"><i></i>Independent BMW &amp; MINI Specialist · Est. 2007</p>
+                <h1><span><b>Main dealer standards.</b></span><span><b>Without the</b></span><span><b>dealer
+                            bill.</b></span></h1>
+                <p class="sub">Factory-level servicing, diagnostics and repairs for BMW and MINI, backed by a written
+                    guarantee.</p>
+                <div class="btns"><a class="btn blue mag" href="#contact">Book a Service</a><a class="btn ghost mag"
+                        href="tel:02073860777">Call 020 7386 0777</a></div>
+            </div>
+            <div class="stats" id="stats">
+                <div><strong data-n="2007">2007</strong>established</div>
+                <div><strong><i data-n="100" style="font-style:normal">100</i>%</strong>genuine parts</div>
+                <div><strong>up to <i data-n="50" style="font-style:normal">50</i>%</strong>below dealer</div>
+            </div>
+            <div class="scroll">Scroll</div>
+        </header>
+    </div>
+
+    <main>
+        <!-- Services -->
+        <section class="sec" id="services">
+            <h2 data-r>Everything your BMW needs, under one arch.</h2>
+            <div class="bento">
+                <article class="card b1" data-r>
+                    <h3>BMW Servicing</h3>
+                    <p>Full and interim services to BMW schedules with genuine parts and Castrol oil. Your manufacturer
+                        warranty stays valid.</p>
+                </article>
+                <article class="card b2" data-r>
+                    <h3>MINI Servicing</h3>
+                    <p>From Cooper to JCW, serviced by people who know the platform.</p>
+                </article>
+                <article class="card b3" data-r>
+                    <h3>///M Servicing</h3>
+                    <p>M-car care for M2, M3 and M4 owners.</p>
+                </article>
+                <article class="card b4" data-r>
+                    <h3>Diagnostics</h3>
+                    <p>Dealer-equivalent fault finding, £75 + VAT.</p>
+                </article>
+                <article class="card b5" data-r>
+                    <h3>MOT Testing</h3>
+                    <p>Honest MOT results, no upselling.</p>
+                </article>
+                <article class="card b6" data-r>
+                    <h3>Bodywork</h3>
+                    <p>Repairs and refinishing to a clean factory look.</p>
+                </article>
+                <article class="card b7" data-r>
+                    <h3>Air Conditioning</h3>
+                    <p>Regas, leak checks and repairs.</p>
+                </article>
+                <article class="card b3" data-r style="grid-column:span 6">
+                    <h3>Wheel Alignment</h3>
+                    <p>Laser alignment for even tyre wear and straight tracking.</p>
+                </article>
+                <article class="card b8" data-r>
+                    <div>
+                        <h3>Fixed-price servicing</h3>
+                        <p>Oil service, Inspection 1 and Inspection 2 at a price agreed up front.</p>
+                    </div><a class="btn mag" href="#contact">Get a price</a>
+                </article>
+            </div>
+        </section>
+
+        <!-- BMW and MINI -->
+        <section class="sec split" style="padding-top:0">
+            <div class="pn grain" id="bmw" data-r>
+                <div class="big" data-px aria-hidden="true">BMW</div>
+                <h2>BMW, looked after properly</h2>
+                <ul>
+                    <li>Servicing to BMW schedules</li>
+                    <li>Genuine BMW parts</li>
+                    <li>Specialist M-car knowledge</li>
+                </ul><a class="btn blue mag" href="#contact">Book a service</a>
+            </div>
+            <div class="pn" id="mini" data-r>
+                <div class="big" data-px aria-hidden="true">MINI</div>
+                <h2>MINI, without the dealer mark-up</h2>
+                <ul>
+                    <li>Cooper, S and JCW</li>
+                    <li>Fixed-price servicing</li>
+                    <li>Guaranteed workmanship</li>
+                </ul><a class="btn mag" href="#contact">Book a service</a>
+            </div>
+        </section>
+
+        <!-- Why us -->
+        <section class="sec why">
+            <div>
+                <h2 data-r>Dealer standard. Independent honesty.</h2>
+                <ul>
+                    <li data-r>Your warranty stays valid</li>
+                    <li data-r>Genuine BMW parts with manufacturer warranty</li>
+                    <li data-r>Castrol oils</li>
+                    <li data-r>Dealer-equivalent diagnostics</li>
+                    <li data-r>Every job guaranteed</li>
+                    <li data-r>Plain-English advice</li>
+                </ul>
+            </div>
+            <aside class="hl grain" data-r><span class="plate" aria-label="Number plate CAW 110">CAW 110</span>
+                <h3>Full diagnostics report £75 + VAT</h3>
+                <p>One price, no hidden costs.</p>
+            </aside>
+        </section>
+
+        <!-- Numbers -->
+        <div class="strip" data-r>
+            <div><strong data-n="2007">2007</strong><span>established</span></div>
+            <div><strong><i data-n="100" style="font-style:normal">100</i>%</strong><span>genuine parts</span></div>
+            <div><strong>up to <i data-n="50" style="font-style:normal">50</i>%</strong><span>below dealer prices</span>
+            </div>
+            <div><strong data-n="1989">1989</strong><span>founder's BMW career began</span></div>
+        </div>
+
+        <!-- About -->
+        <section class="sec about" id="about">
+            <div data-r><img class="por" src="assets/naz.jpg" alt="Naeem Zaidi, founder of Chelsea Autoworx"
+                    loading="lazy">
+                <p class="quote">“I treat every car like it's going home with my family.”</p>
+            </div>
+            <div data-r>
+                <h2>Meet Naz</h2>
+                <p>Naeem Zaidi, known as Naz, is a fully trained BMW technician. He started as an apprentice at Cheyne
+                    BMW Hammersmith in 1989 and rose to senior technician and technical fault advisor.</p>
+                <p class="muted" style="margin-top:16px">Over 10 years servicing, repairing and maintaining BMWs.</p>
+            </div>
+        </section>
+
+        <!-- Our work (pinned horizontal scroll) -->
+        <section class="work" id="work">
+            <h2>Our work</h2>
+            <div class="track" id="track">
+                <div class="reel" style="background:linear-gradient(160deg,#2a7de1,#0a0c0f)"><b>BMW M3
+                        G80</b><span>25.1K views</span></div>
+                <div class="reel" style="background:linear-gradient(160deg,#5fb0ff,#12161b)"><b>M235i
+                        Diagnostics</b><span>12.7K views</span></div>
+                <div class="reel" style="background:linear-gradient(160deg,#8b96a3,#0a0c0f)"><b>B58 Major
+                        Service</b><span>15.9K views</span></div>
+                <div class="reel" style="background:linear-gradient(160deg,#1b3a63,#12161b)"><b>Independent Specialist
+                        Fulham</b><span>20.1K views</span></div>
+                <div class="reel" style="background:none;aspect-ratio:auto;width:auto;justify-content:center"><a
+                        class="btn blue" href="https://www.tiktok.com/@chelsea.autoworx" rel="noopener">Follow
+                        @chelsea.autoworx on TikTok</a></div>
+            </div>
+        </section>
+
+        <!-- How it works -->
+        <section class="sec">
+            <h2 data-r>Four steps to a sorted car</h2>
+            <div class="steps" id="steps">
+                <svg preserveAspectRatio="none" viewBox="0 0 100 100" aria-hidden="true">
+                    <path id="stepline" d="M6 20 C 25 20,25 55,38 55 S 55 35,63 38 S 80 60,94 62" fill="none"
+                        stroke="#2a7de1" stroke-width=".5" vector-effect="non-scaling-stroke" />
+                </svg>
+                <div class="card" data-r>
+                    <h3>Book online or call</h3>
+                    <p class="muted">Tell us the car and the problem.</p>
+                </div>
+                <div class="card" data-r>
+                    <h3>We diagnose and quote</h3>
+                    <p class="muted">A clear price before any work.</p>
+                </div>
+                <div class="card" data-r>
+                    <h3>Genuine parts fitted</h3>
+                    <p class="muted">By trained technicians.</p>
+                </div>
+                <div class="card" data-r>
+                    <h3>Collect with a guarantee</h3>
+                    <p class="muted">Every job guaranteed in writing.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews (placeholder) -->
+        <section class="sec" style="max-width:none;padding-left:0;padding-right:0">
+            <h2 style="margin-left:clamp(20px,5vw,72px)">What owners say</h2>
+            <div class="mq">
+                <div class="mqt" id="mqt">
+                    <!-- PLACEHOLDER REVIEWS -->
+                    <figure class="card rev">
+                        <blockquote>Knowledgeable and straight with me about what the car needed.</blockquote>
+                        <small>Placeholder review</small>
+                    </figure>
+                    <figure class="card rev">
+                        <blockquote>Honest advice and no pressure to add extras.</blockquote><small>Placeholder
+                            review</small>
+                    </figure>
+                    <figure class="card rev">
+                        <blockquote>Great communication at every step.</blockquote><small>Placeholder review</small>
+                    </figure>
+                    <figure class="card rev">
+                        <blockquote>Fair prices compared with the main dealer.</blockquote><small>Placeholder
+                            review</small>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="sec faq" style="max-width:900px">
+            <h2 data-r>Questions, answered</h2>
+            <div id="faq"></div>
+        </section>
+
+        <!-- Contact -->
+        <section class="sec" id="contact">
+            <h2 data-r>Book your BMW in.</h2>
+            <div class="contact">
+                <form id="form" data-r>
+                    <div class="row"><input name="name" placeholder="Name" aria-label="Name" required><input
+                            name="phone" type="tel" placeholder="Phone" aria-label="Phone" required></div>
+                    <input name="email" type="email" placeholder="Email" aria-label="Email" required><input name="car"
+                        placeholder="Car model and year" aria-label="Car model and year">
+                    <select aria-label="Service type">
+                        <option>BMW servicing</option>
+                        <option>MINI servicing</option>
+                        <option>///M servicing</option>
+                        <option>Diagnostics</option>
+                        <option>MOT</option>
+                        <option>Bodywork</option>
+                        <option>Air conditioning</option>
+                        <option>Wheel alignment</option>
+                    </select>
+                    <textarea placeholder="Message" aria-label="Message"></textarea><button class="btn blue"
+                        type="submit">Send booking request</button>
+                    <p id="ok" role="status" style="display:none;color:var(--blue2)">Thanks. We'll call you to confirm
+                        your booking.</p>
+                </form>
+                <div data-r>
+                    <div class="map" role="img" aria-label="Map placeholder">Map placeholder</div>
+                    <address><strong>Chelsea Autoworx Ltd</strong>Arch 45, New Kings Road, Fulham, London SW6 3QR
+                        <a href="tel:02073860777">Tel: 020 7386 0777</a><a
+                            href="mailto:info@chelseaautoworx.com">info@chelseaautoworx.com</a>
+                        <!-- Hours to be confirmed with the client -->Mon–Sat 8:30–18:00, Sunday closed
+                    </address>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="in"><a class="logo" href="#top"><img src="assets/logo.png" alt="Chelsea Autoworx logo" width="42"
+                    height="42"
+                    onerror="var f=['assets/Logo.png','assets/logo.jpg','assets/logo.webp','assets/logo.svg'],i=+(this.dataset.i||0);if(i<f.length){this.dataset.i=i+1;this.src=f[i]}else{console.warn('logo not found at assets/logo.png');this.style.display='none'}"
+                    loading="lazy"><span>Chelsea <b>Autoworx</b></span></a>
+            <nav aria-label="Footer"><a href="#services">Services</a><a href="#about">About</a><a
+                    href="#contact">Contact</a><a href="https://www.tiktok.com/@chelsea.autoworx"
+                    rel="noopener">TikTok</a></nav>
+        </div>
+        <small>© Chelsea Autoworx Ltd · BMW M3 G80 2025 by Drifter Models, licensed under CC BY 4.0</small>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+        import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+        gsap.registerPlugin(ScrollTrigger);
+        const $ = s => document.querySelector(s), reduce = matchMedia('(prefers-reduced-motion:reduce)').matches, mobile = innerWidth < 900;
+
+        /* Config: body paint colour (null keeps grey) */
+        const BODY_COLOUR = null; // e.g. 0x2a7de1
+        /* Default resting pose. carYaw is relative to a pure front view (negative = nose to the lower-left) */
+        const DEFAULT_POSE = { carYaw: -0.68, cameraPosition: [0, 2.1, 9.5], cameraTarget: [0, 0.35, 0], fov: 29, carScale: 3.6, carOffset: [0, 0, 0] };
+        /* Screen position of the car centre as a fraction of the panel */
+        const placeFrac = () => innerWidth < 900 ? { x: .5, y: .78, w: .9 } : { x: .695, y: .64, w: .45 };
+
+        /* Static content: FAQ, counters, form, magnetic buttons */
+        const faqs = [['Will servicing here affect my warranty?', 'No. We service to BMW schedules with genuine parts and approved oils, so your manufacturer warranty stays valid.'], ['Do you use genuine parts?', 'Yes. Genuine BMW parts with manufacturer warranty.'], ['How much is a diagnostic?', 'A full diagnostics report is £75 + VAT.'], ['Do you service MINIs?', 'Yes, all MINI models including Cooper, S and JCW.'], ['Do you do MOTs?', 'Yes. Book an MOT online or call us.'], ['How do I book?', 'Use the form below or call 020 7386 0777.']];
+        $('#faq').innerHTML = faqs.map((f, i) => `<div class="q"><button aria-expanded="false" aria-controls="a${i}" id="b${i}">${f[0]}<span aria-hidden="true">+</span></button><div class="a" id="a${i}" role="region" aria-labelledby="b${i}"><p>${f[1]}</p></div></div>`).join('');
+        document.querySelectorAll('.faq button').forEach(b => b.onclick = () => { const a = b.nextElementSibling, o = b.getAttribute('aria-expanded') === 'true'; b.setAttribute('aria-expanded', !o); b.lastChild.textContent = o ? '+' : '–'; gsap.to(a, { height: o ? 0 : a.scrollHeight, duration: reduce ? 0 : .45, ease: 'power3.out' }) });
+        $('#form').onsubmit = e => { e.preventDefault(); $('#ok').style.display = 'block'; e.target.reset() };
+        document.querySelectorAll('[data-n]').forEach(el => { const n = +el.dataset.n, o = { v: 0 }; ScrollTrigger.create({ trigger: el, start: 'top 95%', once: true, onEnter: () => gsap.to(o, { v: n, duration: reduce ? 0 : 1.8, ease: 'power2.out', onUpdate: () => el.textContent = Math.round(o.v) }) }) });
+        if (!reduce && matchMedia('(hover:hover)').matches) document.querySelectorAll('.mag').forEach(b => { b.onmousemove = e => { const r = b.getBoundingClientRect(); gsap.to(b, { x: (e.clientX - r.left - r.width / 2) * .25, y: (e.clientY - r.top - r.height / 2) * .25, duration: .3 }) }; b.onmouseleave = () => gsap.to(b, { x: 0, y: 0, duration: .5, ease: 'elastic.out(1,.5)' }) });
+
+        /* Reviews: duplicate for seamless marquee */
+        $('#mqt').innerHTML += $('#mqt').innerHTML;
+
+        /* Reveals: fade + translate + slight blur */
+        if (!reduce) {
+            document.querySelectorAll('[data-r]').forEach((el, i) => gsap.from(el, { opacity: 0, y: 36, filter: 'blur(8px)', duration: .9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%' } }));
+            document.querySelectorAll('[data-px]').forEach(el => gsap.to(el, { xPercent: -12, scrollTrigger: { trigger: el.parentElement, scrub: true } }));
+            /* Pinned horizontal scroll */
+            const tr = $('#track'); ScrollTrigger.matchMedia ? 0 : 0; gsap.to(tr, { x: () => -(tr.scrollWidth - innerWidth + 40), ease: 'none', scrollTrigger: { trigger: '#work', start: 'top top', end: () => '+=' + (tr.scrollWidth - innerWidth), pin: true, scrub: true, invalidateOnRefresh: true } });
+            /* Steps line draws on scroll */
+            const p = $('#stepline'), L = p.getTotalLength ? p.getTotalLength() : 1000; gsap.set(p, { strokeDasharray: L, strokeDashoffset: L }); gsap.to(p, { strokeDashoffset: 0, ease: 'none', scrollTrigger: { trigger: '#steps', start: 'top 80%', end: 'bottom 60%', scrub: true } });
+            /* Hero scroll: headline lifts and fades */
+            gsap.to('#copy', { y: -80, opacity: 0, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom 20%', scrub: true } });
+        }
+
+        /* Hero: 3D car */
+        const hero = $('#hero'), cv = $('#cv');
+        const showFallback = () => { $('#fallback').style.display = 'block'; $('#load') && $('#load').remove(); cv.remove(); gsap.to('.chip', { opacity: 0 }); introText() };
+        function introText() { if (reduce) return; gsap.from('#copy h1 b', { yPercent: 110, duration: 1, ease: 'expo.out', stagger: .08 }); gsap.from('.sub,.btns,.stats', { y: 24, opacity: 0, duration: .9, ease: 'power3.out', stagger: .1, delay: .4 }) }
+        const gl = (() => { try { return !!document.createElement('canvas').getContext('webgl2') } catch (e) { return false } })();
+        if (!gl || reduce) { console.warn(!gl ? 'WebGL unavailable' : 'reduced motion'); showFallback() } else {
+            gsap.from(hero, { opacity: 0, scale: .96, duration: 1, ease: 'power3.out' });
+            const renderer = new THREE.WebGLRenderer({ canvas: cv, alpha: true, antialias: true }); renderer.setClearAlpha(0);
+            renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.shadowMap.enabled = false;
+            const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(DEFAULT_POSE.fov, 1, .1, 1000);
+            const pmrem = new THREE.PMREMGenerator(renderer); scene.environment = pmrem.fromScene(new RoomEnvironment(), .04).texture;
+            const rim = new THREE.DirectionalLight(0x5fb0ff, 3); rim.position.set(4, 3, -5); const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(-4, 6, 4); scene.add(rim, key);
+            const root = new THREE.Group(), car = new THREE.Group(); scene.add(root); root.add(car);
+            const state = { yaw: DEFAULT_POSE.carYaw, pitch: 0, z: 0, dip: 0 }; let active = false, visible = true, ready = false, dragging = false, model, wheels = [], wheelNodes = [], glowMats = [], meshes = [];
+            const A1 = new THREE.Object3D(), A2 = new THREE.Object3D(); car.add(A1, A2);
+
+            function resize() { const w = hero.clientWidth, h = hero.clientHeight; renderer.setPixelRatio(Math.min(devicePixelRatio, mobile ? 1.5 : 2)); renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); layout() }
+            let baseScale = 1, carH = .3, yawComp = 0, chipPos = null;
+            function defYaw() { return DEFAULT_POSE.carYaw - yawComp }
+            let samples = null;
+            function screenBox() {
+                const o = { minx: 9, maxx: -9, miny: 9, maxy: -9 }, v = new THREE.Vector3(); car.updateMatrixWorld(true);
+                if (samples) { for (let i = 0; i < samples.length; i += 3) { v.set(samples[i], samples[i + 1], samples[i + 2]).applyMatrix4(car.matrixWorld).project(cam); const x = (v.x + 1) / 2, y = (1 - v.y) / 2; if (x < o.minx) o.minx = x; if (x > o.maxx) o.maxx = x; if (y < o.miny) o.miny = y; if (y > o.maxy) o.maxy = y } return o }
+                const b = new THREE.Box3().setFromObject(car); for (let i = 0; i < 8; i++) { v.set(i & 1 ? b.max.x : b.min.x, i & 2 ? b.max.y : b.min.y, i & 4 ? b.max.z : b.min.z).project(cam); const x = (v.x + 1) / 2, y = (1 - v.y) / 2; o.minx = Math.min(o.minx, x); o.maxx = Math.max(o.maxx, x); o.miny = Math.min(o.miny, y); o.maxy = Math.max(o.maxy, y) } return o
+            }
+            /* Place the car so its centre lands at the target screen fraction at the target width */
+            function layout() {
+                const f = placeFrac(), rm = innerWidth < 900 ? 16 : 40, W = hero.clientWidth, H = hero.clientHeight, S = DEFAULT_POSE.carScale, T = new THREE.Vector3(...DEFAULT_POSE.cameraTarget), dir = new THREE.Vector3(...DEFAULT_POSE.cameraPosition).sub(T), D0 = dir.length(); dir.normalize();
+                let d = D0, vw, vh; const setCam = () => { cam.position.copy(T).addScaledVector(dir, d); cam.lookAt(T); cam.updateMatrixWorld(true); vh = 2 * d * Math.tan(THREE.MathUtils.degToRad(cam.fov / 2)); vw = vh * cam.aspect };
+                setCam(); const o = DEFAULT_POSE.carOffset; root.scale.setScalar(S); root.position.set((f.x - .5) * vw + o[0], -(f.y - .5) * vh - carH * S / 2 + o[1], o[2]);
+                if (!(ready && model)) return;
+                const sr = car.rotation.clone(), sp = car.position.clone(); car.position.set(0, 0, 0);
+                /* fit: dolly the camera until the projected car is w wide, centre it on (f.x,f.y), keep 30px right / 40px bottom margins */
+                const fit = w => {
+                    for (let k = 0; k < 3; k++) {
+                        yawComp = Math.atan(root.position.x / d); car.rotation.set(0, defYaw(), 0); root.updateMatrixWorld(true); const s0 = screenBox(); d *= (s0.maxx - s0.minx) / w; setCam(); root.updateMatrixWorld(true); const t = screenBox();
+                        root.position.x += (f.x - (t.minx + t.maxx) / 2) * vw; root.position.y -= (f.y - (t.miny + t.maxy) / 2) * vh; root.updateMatrixWorld(true); const u = screenBox();
+                        root.position.x -= Math.max(0, u.maxx - (1 - rm / W)) * vw; root.position.y += Math.max(0, u.maxy - (1 - 50 / H)) * vh
+                    }
+                };
+                fit(f.w);
+                /* desktop: stay clear of headline lines (16px), subtext, buttons and stats bar (40px); shrink in small steps if needed */
+                if (innerWidth >= 900) {
+                    const hr = hero.getBoundingClientRect(), k = hr.width / W, obs = [];
+                    hero.querySelectorAll('#copy h1 b').forEach(b => { const r = document.createRange(); r.selectNodeContents(b); obs.push([r.getBoundingClientRect(), 16]) });
+                    hero.querySelectorAll('.sub,.stats').forEach(e => obs.push([e.getBoundingClientRect(), 40])); hero.querySelectorAll('.btns a').forEach(e => obs.push([e.getBoundingClientRect(), 60]));
+                    const hit = () => { const t = screenBox(); return obs.some(([r, m]) => t.minx * W < (r.right - hr.left) / k + m && t.maxx * W > (r.left - hr.left) / k - m && t.miny * H < (r.bottom - hr.top) / k + m && t.maxy * H > (r.top - hr.top) / k - m) };
+                    let w = f.w; for (let n = 0; n < 10 && hit() && w > f.w * .8; n++) { w *= .97; fit(w) }
+                    if (w < f.w) console.log('car width reduced to', +(w * 100).toFixed(1) + '% to clear the text'); if (hit()) console.warn('car is still within 40px of the text block')
+                }
+                /* chips, glow and shadow follow the car's final box */
+                const bx = screenBox(), c1 = $('#c1'), c2 = $('#c2'), cl = (v, a, b) => Math.min(Math.max(v, a), b), cx = (bx.minx + bx.maxx) / 2, ww = bx.maxx - bx.minx;
+                chipPos = { c1: [cl(bx.minx * W, 8, W - c1.offsetWidth - 8), Math.max(8, bx.miny * H - 4)], c2: [cl(bx.maxx * W - c2.offsetWidth, 8, W - c2.offsetWidth - rm), Math.max(8, bx.miny * H - c2.offsetHeight - 22)] };
+                hero.style.setProperty('--gx', cx * 100 + '%'); hero.style.setProperty('--gy', (bx.maxy * 100 - 5) + '%'); hero.style.setProperty('--gw', ww * 95 + '%'); hero.style.setProperty('--gh', ww * 100 + '%');
+                const sh = $('#shadow'); sh.style.left = cx * 100 + '%'; sh.style.top = (bx.maxy * H - H * .012) + 'px'; sh.style.width = ww * 92 + '%'; sh.style.height = H * .06 + 'px'; sh.style.translate = '-50% -50%';
+                car.rotation.copy(sr); car.position.copy(sp); root.updateMatrixWorld(true)
+            }
+            addEventListener('resize', resize);
+
+            const failT = setTimeout(() => { if (!ready) { console.warn('GLB not ready after 6s, showing fallback'); showFallback() } }, 6000);
+            const loader = new GLTFLoader(); loader.setMeshoptDecoder(MeshoptDecoder);
+            requestAnimationFrame(() => setTimeout(() => loader.load('bmw-m3-web.glb', onLoad, undefined, e => { console.error('GLB load failed: ' + ((e && e.message) || (e && e.type) || String(e)) + ' (check assets/ path)'); showFallback() }), 0));
+
+            function onLoad(g) {
+                if (!cv.isConnected) return; root.scale.setScalar(1); root.position.set(0, 0, 0); car.rotation.set(0, 0, 0); car.position.set(0, 0, 0); root.updateMatrixWorld(true); console.log('GLB loaded'); model = g.scene; car.add(model); model.updateMatrixWorld(true);
+                let box = new THREE.Box3().setFromObject(model), sz = box.getSize(new THREE.Vector3());
+                /* Wheel diagnostics */
+                const names = ['WHEEL_LF', 'WHEEL_LR', 'WHEEL_RF', 'WHEEL_RR'];
+                model.traverse(o => { if (o.isMesh) { meshes.push(o); o.frustumCulled = false } });
+                console.log('meshes', meshes.length);
+                const found = names.map(n => { let f; model.traverse(o => { if (o.name.startsWith(n) && !f) f = o }); return f });
+                found.forEach((w, i) => { if (!w) return console.error('MISSING', names[i]); const b = new THREE.Box3().setFromObject(w); console.log(names[i], JSON.stringify({ pos: w.getWorldPosition(new THREE.Vector3()).toArray(), parent: w.parent && w.parent.name, visible: w.visible, box: [b.min.toArray(), b.max.toArray()] })) });
+                /* Long axis & front direction (via headlights) */
+                const longX = sz.x > sz.z; let hl = new THREE.Vector3(), hn = 0; model.traverse(o => { if (/^M4_2024_headlight_[LR]/.test(o.name) && !o.isMesh && o.children.length) { hl.add(new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3())); hn++ } });
+                hl.divideScalar(Math.max(hn, 1)); const c = box.getCenter(new THREE.Vector3()), axis = longX ? 'x' : 'z', sign = Math.sign(hl[axis] - c[axis]) || 1;
+                /* Orient so the nose faces +z, then centre on origin and normalise length to ~1.15 */
+                model.rotation.y = longX ? (sign > 0 ? -Math.PI / 2 : Math.PI / 2) : (sign > 0 ? 0 : Math.PI); model.updateMatrixWorld(true);
+                box = new THREE.Box3().setFromObject(model); sz = box.getSize(new THREE.Vector3()); const s = 1.15 / sz.z;
+                model.scale.setScalar(s); model.position.set(0, 0, 0); model.updateMatrixWorld(true); box.setFromObject(model); const cc = box.getCenter(new THREE.Vector3()); model.position.set(-cc.x, -box.min.y, -cc.z); model.updateMatrixWorld(true); box.setFromObject(model);
+                /* Wheel pivots: rotate around each wheel's own centre on its axle (smallest bbox dimension) */
+                /* Wheel pivots (nodes are WHEEL_xx_<n>, identity transform, geometry baked at the wheel position):
+                   pivot at the wheel's bbox centre, wheel re-parented into it via attach() (keeps world pose, offsets by -centre) */
+                found.forEach((w, i) => {
+                    try {
+                        if (!w) return; wheelNodes.push(w); w.traverse(m => { m.visible = true; m.frustumCulled = false });
+                        const b = new THREE.Box3().setFromObject(w), ctr = b.getCenter(new THREE.Vector3()), size = b.getSize(new THREE.Vector3());
+                        const ax = size.x < size.z ? 'x' : 'z'; /* axle = thinnest side of the wheel box (car faces +z, so normally x) */
+                        const piv = new THREE.Object3D(); piv.name = names[i] + '_pivot'; w.parent.add(piv); piv.position.copy(w.parent.worldToLocal(ctr.clone())); piv.updateMatrixWorld(true); piv.attach(w);
+                        const local = new THREE.Vector3(ax === 'x' ? 1 : 0, 0, ax === 'z' ? 1 : 0).transformDirection(new THREE.Matrix4().copy(piv.matrixWorld).invert());
+                        /* wobble test: spinning must not move the wheel centre; otherwise spin is disabled for this wheel */
+                        piv.rotateOnAxis(local, 1.3); piv.updateMatrixWorld(true); const drift = new THREE.Box3().setFromObject(w).getCenter(new THREE.Vector3()).distanceTo(ctr); piv.rotateOnAxis(local, -1.3); piv.updateMatrixWorld(true);
+                        const ok = drift < .025; console.log(names[i], 'size', JSON.stringify(size.toArray().map(v => +v.toFixed(3))), 'axle axis', ax, 'drift', +drift.toFixed(4), ok ? 'spin ON' : 'spin OFF (wheel stays in arch)');
+                        if (ok) wheels.push({ piv, local })
+                    } catch (err) { console.warn('wheel skipped', err.message) }
+                });
+                /* Body paint: material with clearcoat/metal on the largest meshes; log all materials */
+                try {
+                    const mats = new Map(); meshes.forEach(m => { const mm = m.material, a = new THREE.Box3().setFromObject(m).getSize(new THREE.Vector3()); mats.set(mm, (mats.get(mm) || 0) + a.x * a.y * a.z) });
+                    console.log('materials', JSON.stringify([...mats].map(([m, v]) => [m.name, m.metalness, m.clearcoat, +v.toExponential(2)])));
+                    const body = [...mats].filter(([m]) => m.metalness > .3 || m.clearcoat > 0).sort((a, b) => b[1] - a[1])[0];
+                    if (body) { console.log('body paint guess:', body[0].name); if (BODY_COLOUR != null) { body[0].color.set(BODY_COLOUR); body[0].clearcoat = 1 } }
+                } catch (err) { console.warn('paint skipped', err.message) }
+                /* Headlight emissive for the landing flash */
+                try { model.traverse(o => { if (o.isMesh && /headlight/i.test(o.name + (o.parent ? o.parent.name : '')) && o.material && o.material.emissive) { o.material = o.material.clone(); o.material.emissive = new THREE.Color(0x9fd0ff); o.material.emissiveIntensity = 0; glowMats.push(o.material) } }) } catch (err) { console.warn('headlight skipped', err.message) }
+                /* Callout anchors in car space */
+                const h = box.max.y - box.min.y; carH = h; A1.position.set(0, h * .38, .575); A2.position.set(0, h * .85, -.5);
+                /* vertex samples (car space) for an accurate on-screen bounding box */
+                try { model.updateMatrixWorld(true); let tot = 0; meshes.forEach(m => tot += m.geometry.attributes.position.count); const st = Math.max(1, Math.floor(tot / 30000)), arr = [], v = new THREE.Vector3(); meshes.forEach(m => { const p = m.geometry.attributes.position; for (let i = 0; i < p.count; i += st) { v.fromBufferAttribute(p, i).applyMatrix4(m.matrixWorld); arr.push(v.x, v.y, v.z) } }); samples = new Float32Array(arr); console.log('bbox samples', samples.length / 3) } catch (err) { console.warn('sampling skipped', err.message) }
+                ready = true; resize(); state.yaw = defYaw(); clearTimeout(failT); $('#load') && $('#load').remove(); try { intro() } catch (err) { console.error('intro failed', err.message); gsap.set(cv, { opacity: 1 }); state.z = 0; active = true; introText() } console.log('canvas', cv.clientWidth, cv.clientHeight, JSON.stringify(renderer.getSize(new THREE.Vector2())), 'car pos', JSON.stringify(root.position.toArray()), 'scale', root.scale.x, 'cam', JSON.stringify(cam.position.toArray()), 'bbox', JSON.stringify([box.min.toArray(), box.max.toArray()]))
+            }
+
+            const tmp = new THREE.Vector3();
+            function proj(o) { o.getWorldPosition(tmp); tmp.project(cam); return [(tmp.x + 1) / 2 * hero.clientWidth, (1 - tmp.y) / 2 * hero.clientHeight] }
+            function updateCallouts() {
+                if (!ready || !chipPos) return; const [x1, y1] = proj(A1), [x2, y2] = proj(A2), W = hero.clientWidth;
+                const c1 = $('#c1'), c2 = $('#c2');
+                Object.assign(c1.style, { left: chipPos.c1[0] + 'px', top: chipPos.c1[1] + 'px' }); Object.assign(c2.style, { left: chipPos.c2[0] + 'px', top: chipPos.c2[1] + 'px' });
+                const set = (l, d, ax, ay, bx, by) => { l.setAttribute('x1', ax); l.setAttribute('y1', ay); l.setAttribute('x2', bx); l.setAttribute('y2', by); d.setAttribute('cx', ax); d.setAttribute('cy', ay) };
+                set($('#l1'), $('#d1'), x1, y1, chipPos.c1[0] + c1.offsetWidth / 2, chipPos.c1[1] + c1.offsetHeight); set($('#l2'), $('#d2'), x2, y2, chipPos.c2[0] + c2.offsetWidth / 2, chipPos.c2[1] + c2.offsetHeight)
+            }
+
+            /* Intro: car drives in from the back, wheels spin then stop, nose dip, headlight flash */
+            function intro() {
+                state.z = -40; root.visible = true; const sp = { v: 40 }; scene.fog = new THREE.Fog(0x0a0c0f, 8, 30); const fog = { n: 3, f: 12 }; scene.fog.near = fog.n; scene.fog.far = fog.f;
+                gsap.set(cv, { opacity: 1 });
+                const tl = gsap.timeline({ onComplete: () => { active = true; gsap.to('#tip', { opacity: 0 }); scene.fog = null; console.log('intro done, car z', state.z, 'opacity', cv.style.opacity); console.log('FINAL wheels', JSON.stringify(wheelNodes.map(w => ({ n: w.name, pos: w.getWorldPosition(new THREE.Vector3()).toArray().map(v => +v.toFixed(3)), visible: w.visible })))); { const q = screenBox(), W = hero.clientWidth, H = hero.clientHeight; console.log('car box in panel px', JSON.stringify({ x: [q.minx * W | 0, q.maxx * W | 0], y: [q.miny * H | 0, q.maxy * H | 0], widthPct: +((q.maxx - q.minx) * 100).toFixed(1), bottomGapPx: H - (q.maxy * H | 0), clearsButtonsBy: Math.round(q.minx * W - Math.max(...[...hero.querySelectorAll('.btns a')].map(e => e.getBoundingClientRect().right - hero.getBoundingClientRect().left))), rightGapPx: W - (q.maxx * W | 0), leftPx: q.minx * W | 0, centrePct: [+(((q.minx + q.maxx) / 2) * 100).toFixed(1), +(((q.miny + q.maxy) / 2) * 100).toFixed(1)] })) } } });
+                tl.to(state, { z: 0, duration: 2, ease: 'expo.out' }, 0.3).to(fog, { n: 30, f: 80, duration: 2, ease: 'power2.out', onUpdate: () => { if (scene.fog) { scene.fog.near = fog.n; scene.fog.far = fog.f } } }, 0.3)
+                    .to(sp, { v: 0, duration: 2.2, ease: 'power3.out' }, 0.3)
+                    .to(state, { dip: .04, duration: .2, ease: 'power2.out' }, 2.0).to(state, { dip: 0, duration: .6, ease: 'power2.inOut' }, 2.2)
+                    .to('#shadow', { scaleX: 1.1, duration: .6 }, 2)
+                    .to(glowMats, { emissiveIntensity: 3, duration: .1, yoyo: true, repeat: 3 }, 2.1);
+                tl.eventCallback('onUpdate', () => { wheels.forEach(w => w.piv.rotateOnAxis(w.local, sp.v * .016)) });
+                tl.add(() => { introText(); gsap.to('.chip', { opacity: 1, duration: .6, stagger: .15 }); gsap.from('#l1,#l2', { opacity: 0, duration: .6 }) }, 2.2)
+            }
+
+            /* Render loop, paused when off-screen or tab hidden */
+            function frame() {
+                requestAnimationFrame(frame); if (!ready || !visible || document.hidden) return;
+                car.rotation.set(state.dip * -1 + state.pitch, state.yaw, 0); car.position.set(0, 0, state.z); renderer.render(scene, cam); updateCallouts()
+            }
+            requestAnimationFrame(frame);
+            new IntersectionObserver(e => visible = e[0].isIntersecting).observe(hero);
+
+            /* Interaction: click and drag only, drag starts only when the ray hits the car */
+            const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(); let lastYv = 0, lastX = 0, vel = 0, ret, idle, lastHover = 0;
+            function hits(e) { const r = cv.getBoundingClientRect(); ndc.set((e.clientX - r.left) / r.width * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1); ray.setFromCamera(ndc, cam); return ray.intersectObject(car, true).length > 0 }
+            let seen = false;
+            cv.addEventListener('pointerdown', e => { if (!active || !hits(e)) return; dragging = true; cv.setPointerCapture(e.pointerId); lastX = e.clientX; lastYv = e.clientY; ret && ret.kill(); clearTimeout(idle); cv.style.cursor = 'grabbing'; gsap.to('.chip,#l1,#l2,#d1,#d2', { opacity: 0, duration: .3 }); seen = true; $('#tip').style.opacity = 0 });
+            cv.addEventListener('pointermove', e => {
+                if (dragging) { state.yaw += (e.clientX - lastX) * .005; state.pitch = THREE.MathUtils.clamp(state.pitch + (e.clientY - lastYv) * .002, -.105, .105); lastX = e.clientX; lastYv = e.clientY; return }
+                if (!active || e.pointerType === 'touch' || performance.now() - lastHover < 80) return; lastHover = performance.now(); const h = hits(e); cv.style.cursor = h ? 'grab' : ''; const t = $('#tip'); if (h && !seen) { t.style.opacity = 1; t.style.left = e.clientX - hero.getBoundingClientRect().left + 16 + 'px'; t.style.top = e.clientY - hero.getBoundingClientRect().top + 16 + 'px' } else t.style.opacity = 0
+            });
+            const end = () => { if (!dragging) return; dragging = false; cv.style.cursor = ''; idle = setTimeout(() => { ret = gsap.to(state, { yaw: defYaw(), pitch: 0, duration: 1.2, ease: 'power3.inOut', onComplete: () => gsap.to('.chip,#l1,#l2,#d1,#d2', { opacity: 1, duration: .5 }) }) }, 2500) };
+            ['pointerup', 'pointercancel'].forEach(t => cv.addEventListener(t, end));
+            if (!reduce) gsap.to('#cv', { scale: 1.08, xPercent: 3, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
+
+            /* Dispose GPU resources on unload */
+            addEventListener('pagehide', () => { scene.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) { [].concat(o.material).forEach(m => { Object.values(m).forEach(v => v && v.isTexture && v.dispose()); m.dispose() }) } }); renderer.dispose() });
+            resize();
+        }
+    </script>
+</body>
+
+</html>
