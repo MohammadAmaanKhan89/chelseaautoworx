@@ -1,0 +1,3173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Chelsea Autoworx | Independent BMW & MINI Specialist, Fulham</title>
+    <meta name="description"
+        content="Independent BMW & MINI specialist in Fulham, London. Servicing, diagnostics, MOT and repairs since 2007.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <script
+        type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+    <style>
+        /* Tokens */
+        :root {
+            --bg: #0a0c0f;
+            --panel: #12161b;
+            --steel: #8b96a3;
+            --blue: #2a7de1;
+            --blue2: #5fb0ff;
+            --plate: #f2c230;
+            --line: rgba(255, 255, 255, .1);
+            --glass: rgba(255, 255, 255, .06);
+            --r-card: 28px;
+            --r-panel: 36px;
+            --r-img: 24px;
+            --pill: 999px;
+            --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0
+        }
+
+        /* NOTE: no CSS scroll-behavior:smooth here. It makes ScrollTrigger's scroll-to-0 during refresh asynchronous,
+           which shifted every pin start by the current scrollY. Smooth anchor scrolling is done in JS instead. */
+        html {
+            scroll-behavior: auto
+        }
+
+        body {
+            background: #050607;
+            color: #e8edf2;
+            font: 400 16px/1.6 Inter, system-ui, sans-serif;
+            overflow-x: hidden
+        }
+
+        h1,
+        h2,
+        h3,
+        .oswald {
+            font-family: Oswald, sans-serif;
+            text-transform: uppercase;
+            font-weight: 600;
+            line-height: 1
+        }
+
+        a {
+            color: inherit
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--blue2);
+            outline-offset: 3px
+        }
+
+        img {
+            border-radius: var(--r-img);
+            max-width: 100%
+        }
+
+        .wrap {
+            padding: 16px
+        }
+
+        .sec {
+            padding: clamp(56px, 9vw, 120px) clamp(20px, 5vw, 72px);
+            max-width: 1300px;
+            margin: auto
+        }
+
+        h2 {
+            font-size: clamp(32px, 4.6vw, 64px);
+            max-width: 15ch;
+            margin-bottom: clamp(28px, 4vw, 56px)
+        }
+
+        .muted {
+            color: var(--steel)
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 24px;
+            border-radius: var(--pill);
+            font: 600 15px Inter;
+            text-decoration: none;
+            color: #fff;
+            border: 1px solid transparent;
+            cursor: pointer;
+            will-change: transform
+        }
+
+        .btn.blue {
+            background: var(--blue);
+            box-shadow: 0 10px 30px -8px rgba(42, 125, 225, .7)
+        }
+
+        .btn.ghost {
+            background: var(--glass);
+            border-color: rgba(255, 255, 255, .22);
+            backdrop-filter: blur(10px)
+        }
+
+        .grain {
+            position: relative
+        }
+
+        .grain::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: var(--grain);
+            opacity: .06;
+            pointer-events: none
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--r-card);
+            padding: 28px;
+            position: relative;
+            transition: transform .4s, box-shadow .4s, border-color .4s
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(95, 176, 255, .4);
+            box-shadow: 0 20px 60px -20px rgba(42, 125, 225, .5)
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            height: min(calc(100svh - 32px), 820px);
+            min-height: 600px;
+            border-radius: var(--r-panel);
+            overflow: hidden;
+            background: var(--bg);
+            box-shadow: inset 0 0 0 1px var(--line);
+            isolation: isolate;
+            user-select: none;
+            -webkit-user-select: none
+        }
+
+        .hero>* {
+            position: absolute
+        }
+
+        .glow {
+            inset: 0;
+            z-index: 0;
+            background: radial-gradient(var(--gw, 50%) var(--gh, 55%) at var(--gx, 65%) var(--gy, 66%), rgba(42, 125, 225, .3), transparent 70%), radial-gradient(35% 35% at 6% 0%, rgba(139, 150, 163, .15), transparent 70%)
+        }
+
+        .dots {
+            inset: 0;
+            opacity: .45;
+            background-image: radial-gradient(rgba(255, 255, 255, .16) 1px, transparent 1.4px);
+            background-size: 26px 26px;
+            -webkit-mask-image: radial-gradient(ellipse 70% 70% at 60% 55%, #000 10%, transparent 75%);
+            mask-image: radial-gradient(ellipse 70% 70% at 60% 55%, #000 10%, transparent 75%)
+        }
+
+        .streaks {
+            inset: 0;
+            overflow: hidden
+        }
+
+        .streaks i {
+            position: absolute;
+            height: 2px;
+            width: 55%;
+            background: linear-gradient(90deg, transparent, rgba(95, 176, 255, .3), transparent);
+            transform: rotate(-24deg)
+        }
+
+        .word {
+            right: 2%;
+            top: 16%;
+            font: 700 clamp(90px, 17vw, 250px)/.88 Oswald;
+            text-align: right;
+            opacity: .11;
+            pointer-events: none;
+            color: transparent;
+            -webkit-text-stroke: 2px #5fb0ff;
+            z-index: 1
+        }
+
+        .gear {
+            right: 14%;
+            top: 6%;
+            width: clamp(200px, 28vw, 420px);
+            opacity: .1;
+            pointer-events: none;
+            border-radius: 0;
+            animation: spin 60s linear infinite
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .shadow {
+            left: 50%;
+            top: 80%;
+            width: 44%;
+            height: 7%;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, .8);
+            filter: blur(18px);
+            pointer-events: none;
+            z-index: 1
+        }
+
+        #cv {
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            touch-action: pan-y;
+            opacity: 0
+        }
+
+        #fallback {
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: 69.5% 64%;
+            transform: scale(1.12);
+            transform-origin: 69.5% 64%;
+            z-index: 2;
+            display: none;
+            border-radius: 0
+        }
+
+        #load {
+            left: 69.5%;
+            top: 64%;
+            width: 34px;
+            height: 34px;
+            border: 2px solid rgba(95, 176, 255, .2);
+            border-top-color: var(--blue2);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            z-index: 2;
+            translate: -50% -50%
+        }
+
+        .overlay {
+            inset: 0;
+            z-index: 5;
+            pointer-events: none
+        }
+
+        .overlay svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%
+        }
+
+        .chip {
+            position: absolute;
+            padding: 8px 16px;
+            border-radius: var(--pill);
+            background: rgba(18, 22, 27, .75);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(95, 176, 255, .4);
+            font: 600 13px Inter;
+            white-space: nowrap;
+            opacity: 0
+        }
+
+        .dragtip {
+            position: absolute;
+            padding: 6px 14px;
+            border-radius: var(--pill);
+            background: var(--glass);
+            border: 1px solid var(--line);
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity .3s
+        }
+
+        nav {
+            z-index: 10;
+            top: 18px;
+            left: 50%;
+            translate: -50% 0;
+            width: min(94%, 1100px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 8px 8px 12px;
+            border-radius: var(--pill);
+            background: var(--glass);
+            border: 1px solid var(--line);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px)
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font: 600 20px Oswald;
+            text-transform: uppercase;
+            color: #fff;
+            letter-spacing: .04em
+        }
+
+        .logo img {
+            width: 42px;
+            height: 42px;
+            flex: none;
+            border-radius: 50%;
+            object-fit: cover;
+            overflow: hidden
+        }
+
+        .logo b {
+            color: var(--blue2);
+            font-weight: 600
+        }
+
+        nav ul {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            padding: 0;
+            font-size: 14px;
+            color: #c9d2dc
+        }
+
+        nav ul a {
+            text-decoration: none
+        }
+
+        nav ul a:hover {
+            color: #fff
+        }
+
+        .copy {
+            z-index: 6;
+            left: clamp(20px, 4vw, 56px);
+            top: 46%;
+            translate: 0 -50%;
+            width: min(58%, 780px);
+            margin-top: 0
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 16px;
+            border-radius: var(--pill);
+            background: var(--glass);
+            border: 1px solid var(--line);
+            font-size: 13px;
+            color: #c9d2dc;
+            margin-bottom: 22px
+        }
+
+        .tag i {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--plate)
+        }
+
+        h1 {
+            font-size: clamp(40px, 5.4vw, 80px);
+            line-height: .95
+        }
+
+        h1 span {
+            display: block;
+            overflow: hidden
+        }
+
+        h1 span b {
+            display: block;
+            font-weight: 600
+        }
+
+        h1 span:last-child b {
+            color: var(--blue)
+        }
+
+        .sub {
+            max-width: 44ch;
+            margin: 22px 0 28px;
+            color: #b6c0cb;
+            font-size: clamp(15px, 1.3vw, 18px)
+        }
+
+        .btns {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .stats {
+            z-index: 6;
+            left: clamp(20px, 4vw, 56px);
+            bottom: 24px;
+            display: flex;
+            gap: clamp(16px, 3vw, 40px);
+            padding: 14px 28px;
+            border-radius: var(--pill);
+            background: var(--glass);
+            border: 1px solid var(--line);
+            backdrop-filter: blur(12px)
+        }
+
+        .stats div {
+            font-size: 12px;
+            color: var(--steel);
+            line-height: 1.3
+        }
+
+        .stats strong {
+            display: block;
+            font: 600 24px Oswald;
+            color: #fff
+        }
+
+        .scroll {
+            z-index: 6;
+            left: 50%;
+            bottom: 24px;
+            translate: -50% 0;
+            padding: 7px 18px;
+            border-radius: var(--pill);
+            border: 1px solid var(--line);
+            font-size: 12px;
+            color: var(--steel)
+        }
+
+        /* Services */
+        .bento {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px
+        }
+
+        .bento .card h3 {
+            font-size: 24px;
+            margin-bottom: 10px
+        }
+
+        .bento p {
+            color: var(--steel);
+            font-size: 15px
+        }
+
+        .b1 {
+            grid-column: span 3;
+            grid-row: span 2;
+            background: linear-gradient(160deg, #16222f, var(--panel) 60%)
+        }
+
+        .b1 h3 {
+            font-size: 44px !important
+        }
+
+        .b2 {
+            grid-column: span 3
+        }
+
+        .b3 {
+            grid-column: span 2
+        }
+
+        .b4 {
+            grid-column: span 2
+        }
+
+        .b5 {
+            grid-column: span 2
+        }
+
+        .b6 {
+            grid-column: span 3
+        }
+
+        .b7 {
+            grid-column: span 3
+        }
+
+        .b8 {
+            grid-column: span 6;
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            background: var(--blue);
+            border-color: transparent
+        }
+
+        .b8 p {
+            color: #e6f1ff
+        }
+
+        .b8 .btn {
+            background: #0a0c0f
+        }
+
+        /* Split panels */
+        .split {
+            display: grid;
+            gap: 20px
+        }
+
+        .pn {
+            border-radius: var(--r-panel);
+            padding: clamp(28px, 5vw, 64px);
+            position: relative;
+            overflow: hidden;
+            min-height: 420px
+        }
+
+        .pn .big {
+            position: absolute;
+            right: -2%;
+            bottom: -6%;
+            font: 700 clamp(120px, 22vw, 320px)/1 Oswald;
+            color: transparent;
+            pointer-events: none;
+            white-space: nowrap
+        }
+
+        .pn h2 {
+            max-width: 12ch;
+            position: relative
+        }
+
+        .pn ul {
+            list-style: none;
+            padding: 0;
+            position: relative;
+            margin-bottom: 28px;
+            display: grid;
+            gap: 8px
+        }
+
+        .pn li::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 12px;
+            background: currentColor
+        }
+
+        .pn .btn {
+            position: relative
+        }
+
+        #bmw.pn {
+            background: var(--bg);
+            border: 1.5px solid var(--blue)
+        }
+
+        #bmw .big {
+            -webkit-text-stroke: 2px rgba(95, 176, 255, .35)
+        }
+
+        #mini.pn {
+            background: #c3cbd4;
+            color: #10151a;
+            width: 88%;
+            margin-left: auto
+        }
+
+        #mini h2 {
+            color: #10151a
+        }
+
+        #mini .big {
+            -webkit-text-stroke: 2px rgba(10, 12, 15, .18)
+        }
+
+        #mini .btn {
+            background: #10151a
+        }
+
+        /* === BMW / MINI scroll-linked entrance (CSS) ===
+           Clip happens on a FULL-WIDTH wrapper (the viewport edge), never on the narrow 1300px container,
+           so the cards are only trimmed while they are still off-screen. overflow-x:clip creates no scroll container
+           and leaves the vertical axis visible. The cards themselves keep their rounded corners (no smaller parent clips them). */
+        .split-wrap {
+            width: 100%;
+            overflow-x: clip
+        }
+
+        #bmwMini {
+            padding-top: 96px;
+            padding-bottom: 96px;
+            padding-left: clamp(24px, 5vw, 72px);
+            padding-right: clamp(24px, 5vw, 72px);
+            /* >= 24px clear space right of the MINI card at rest */
+            scroll-margin-top: 96px
+                /* never starts tucked under the navbar */
+        }
+
+        @media (max-width:699.98px) {
+            #bmwMini {
+                padding-top: 64px;
+                padding-bottom: 64px
+            }
+        }
+
+        /* === /BMW / MINI scroll-linked entrance === */
+
+        /* Why */
+        .why {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 48px;
+            align-items: start
+        }
+
+        .why li {
+            list-style: none;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: 18px
+        }
+
+        .why ul {
+            padding: 0
+        }
+
+        .hl {
+            border-radius: var(--r-panel);
+            padding: 40px;
+            min-height: 520px;
+            background: linear-gradient(170deg, #1b3a63, var(--panel) 70%);
+            border: 1px solid rgba(95, 176, 255, .3);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            gap: 16px;
+            position: sticky;
+            top: 24px
+        }
+
+        .hl h3 {
+            font-size: clamp(34px, 4vw, 54px)
+        }
+
+        .plate {
+            align-self: flex-start;
+            background: var(--plate);
+            color: #111;
+            font: 700 20px Oswald;
+            letter-spacing: .12em;
+            padding: 4px 16px;
+            border-radius: 10px;
+            border: 2px solid #111;
+            box-shadow: 0 0 0 2px var(--plate)
+        }
+
+        .strip {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 24px;
+            padding: 32px 48px;
+            border-radius: var(--pill);
+            background: var(--glass);
+            border: 1px solid var(--line);
+            backdrop-filter: blur(12px);
+            margin: 0 clamp(16px, 4vw, 48px)
+        }
+
+        .strip strong {
+            display: block;
+            font: 600 clamp(32px, 4vw, 52px) Oswald
+        }
+
+        .strip span {
+            font-size: 13px;
+            color: var(--steel)
+        }
+
+        /* About */
+        .about {
+            display: grid;
+            grid-template-columns: .9fr 1.1fr;
+            gap: clamp(24px, 5vw, 72px);
+            align-items: center
+        }
+
+        .por {
+            aspect-ratio: 4/5;
+            border-radius: var(--r-panel);
+            background: linear-gradient(160deg, #243244, #12161b);
+            object-fit: cover;
+            width: 100%
+        }
+
+        .quote {
+            background: var(--blue);
+            border-radius: var(--r-card);
+            padding: 28px;
+            font: 500 20px/1.35 Inter;
+            margin: -70px 0 0 -40px;
+            position: relative;
+            max-width: 360px
+        }
+
+        /* Steps */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            position: relative
+        }
+
+        .steps .card:nth-child(2) {
+            margin-top: 48px
+        }
+
+        .steps .card:nth-child(3) {
+            margin-top: 16px
+        }
+
+        .steps .card:nth-child(4) {
+            margin-top: 64px
+        }
+
+        .steps svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none
+        }
+
+        .steps .card {
+            z-index: 1
+        }
+
+        .steps h3 {
+            font-size: 22px;
+            margin-bottom: 8px
+        }
+
+        /* Reviews */
+        .mq {
+            overflow: hidden
+        }
+
+        .mqt {
+            display: flex;
+            gap: 16px;
+            width: max-content;
+            animation: mq 50s linear infinite
+        }
+
+        .mq:hover .mqt {
+            animation-play-state: paused
+        }
+
+        @keyframes mq {
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        .rev {
+            width: 320px;
+            flex: none;
+            white-space: normal
+        }
+
+        .rev:nth-child(even) {
+            margin-top: 36px
+        }
+
+        .rev small {
+            color: var(--steel)
+        }
+
+        /* FAQ */
+        .faq details,
+        .faq .q {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--r-card);
+            margin-bottom: 12px;
+            overflow: hidden
+        }
+
+        .faq button {
+            all: unset;
+            box-sizing: border-box;
+            width: 100%;
+            padding: 22px 28px;
+            cursor: pointer;
+            font: 600 18px Inter;
+            display: flex;
+            justify-content: space-between;
+            gap: 16px
+        }
+
+        .faq button:focus-visible {
+            outline: 2px solid var(--blue2);
+            outline-offset: -4px;
+            border-radius: var(--r-card)
+        }
+
+        .faq .a {
+            height: 0;
+            overflow: hidden;
+            color: var(--steel)
+        }
+
+        .faq .a p {
+            padding: 0 28px 22px
+        }
+
+        .faq .q[aria-expanded],
+        .faq .q {}
+
+        /* Contact */
+        .contact {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 24px
+        }
+
+        form {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--r-panel);
+            padding: clamp(24px, 4vw, 40px);
+            display: grid;
+            gap: 14px
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            background: #0a0c0f;
+            border: 1px solid var(--line);
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: var(--pill);
+            font: inherit
+        }
+
+        textarea {
+            border-radius: 24px;
+            min-height: 110px;
+            resize: vertical
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px
+        }
+
+        .map {
+            border-radius: var(--r-panel);
+            min-height: 240px;
+            background: radial-gradient(circle at 50% 50%, rgba(42, 125, 225, .25), transparent 60%), var(--panel);
+            background-size: auto;
+            border: 1px solid var(--line);
+            display: grid;
+            place-items: center;
+            color: var(--steel);
+            margin-bottom: 20px
+        }
+
+        .contact address {
+            font-style: normal;
+            display: grid;
+            gap: 10px
+        }
+
+        /* === Contact: booking form submit animation + Google map (CSS) === */
+        .contact {
+            align-items: start
+        }
+
+        #form {
+            position: relative
+        }
+
+        .fld {
+            display: grid;
+            gap: 6px
+        }
+
+        #form input.bad,
+        #form select.bad,
+        #form textarea.bad {
+            border-color: #ff5b6b;
+            box-shadow: 0 0 0 3px rgba(255, 91, 107, .16), 0 0 0 5px rgba(42, 125, 225, .22)
+        }
+
+        .ferr {
+            margin: 0 0 0 14px;
+            padding: 4px 12px;
+            width: fit-content;
+            border-radius: 12px;
+            background: rgba(255, 91, 107, .12);
+            color: #ff8a95;
+            font-size: 13px
+        }
+
+        select:invalid {
+            color: var(--steel)
+        }
+
+        select option {
+            color: #fff;
+            background: #0a0c0f
+        }
+
+        #bookBtn {
+            position: relative;
+            justify-content: center;
+            overflow: visible
+        }
+
+        #bookBtn .bsv {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            fill: none;
+            stroke: #fff;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round
+        }
+
+        #bookBtn .bsv .rspin {
+            stroke-dasharray: 34 104.2;
+            transform-origin: 28px 28px
+        }
+
+        .berr {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 24px;
+            background: rgba(255, 91, 107, .1);
+            border: 1px solid rgba(255, 91, 107, .35);
+            color: #ffb3bb
+        }
+
+        .berr[hidden] {
+            display: none
+        }
+
+        .berr p {
+            margin: 0;
+            flex: 1 1 220px
+        }
+
+        .berr a {
+            color: #fff
+        }
+
+        /* success panel: plain block card, content visible BY DEFAULT (JS only animates it from hidden) */
+        .bookcol {
+            position: relative;
+            border-radius: var(--r-panel)
+        }
+
+        #bookOk {
+            display: grid;
+            justify-items: center;
+            gap: 14px;
+            text-align: center;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--r-panel);
+            padding: clamp(24px, 4vw, 40px);
+            scroll-margin-top: 110px;
+            outline: none
+        }
+
+        #bookOk[hidden] {
+            display: none
+        }
+
+        #bookOk h3 {
+            font-size: clamp(26px, 3.4vw, 38px);
+            margin: 0;
+            outline: none
+        }
+
+        #bookOk p {
+            margin: 0
+        }
+
+        .oktxt {
+            color: #d3dae2;
+            max-width: 46ch
+        }
+
+        .oknote {
+            color: var(--steel);
+            font-size: 14px
+        }
+
+        .oknote a {
+            color: var(--blue2)
+        }
+
+        .okmark {
+            position: relative;
+            width: 96px;
+            height: 96px;
+            display: grid;
+            place-items: center
+        }
+
+        .okc {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background: rgba(31, 163, 184, .16);
+            border: 2px solid #1fa3b8;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 0 40px -6px rgba(31, 163, 184, .7)
+        }
+
+        .okc svg {
+            width: 52px;
+            height: 52px;
+            fill: none;
+            stroke: #fff;
+            stroke-width: 5;
+            stroke-linecap: round;
+            stroke-linejoin: round
+        }
+
+        .okchk {
+            stroke-dasharray: 1;
+            stroke-dashoffset: 0
+        }
+
+        .okrip {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid var(--blue2);
+            opacity: 0
+        }
+
+        .plate {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 10px;
+            padding: 6px 16px;
+            border-radius: 8px;
+            background: var(--plate);
+            color: #10151a;
+            border: 2px solid #10151a;
+            box-shadow: 0 0 0 2px var(--plate);
+            font-family: Oswald, Inter, sans-serif
+        }
+
+        .plate small {
+            font-size: 11px;
+            letter-spacing: .14em;
+            opacity: .7
+        }
+
+        .plate b {
+            font-size: 22px;
+            letter-spacing: .14em
+        }
+
+        .sum {
+            width: 100%;
+            margin: 6px 0 0;
+            padding: 16px 20px;
+            text-align: left;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 8px 18px;
+            border-radius: 24px;
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, .16);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px)
+        }
+
+        .sum dt {
+            color: var(--steel);
+            font-size: 14px
+        }
+
+        .sum dd {
+            margin: 0;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap
+        }
+
+        .acts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 4px
+        }
+
+        /* confetti: its own overlay ABOVE the panel; only ever holds confetti pieces */
+        .cfl {
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            overflow: hidden;
+            border-radius: var(--r-panel);
+            pointer-events: none
+        }
+
+        .cfl i {
+            position: absolute;
+            display: block;
+            opacity: 0;
+            will-change: transform
+        }
+
+        .sr {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+            margin: 0
+        }
+
+        /* map */
+        .mapcol {
+            display: grid;
+            gap: 20px
+        }
+
+        .mapcard {
+            position: relative;
+            min-height: 420px;
+            border-radius: 30px;
+            overflow: hidden;
+            background: #0a0c0f;
+            border: 1px solid var(--line);
+            box-shadow: 0 0 60px -14px rgba(42, 125, 225, .5), 0 24px 50px -24px rgba(0, 0, 0, .7)
+        }
+
+        .mapcard iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            border: 0;
+            filter: grayscale(.3) invert(.9) hue-rotate(180deg) contrast(.9);
+            /* dark-theme tint: delete this one line to remove it */
+            transition: filter .35s
+        }
+
+        .mapcard:hover iframe {
+            filter: none
+                /* clear, normal colours while the map is being used */
+        }
+
+        .mappill {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            z-index: 2;
+            max-width: calc(100% - 28px);
+            padding: 8px 14px;
+            border-radius: var(--pill);
+            background: rgba(10, 12, 15, .6);
+            border: 1px solid rgba(255, 255, 255, .2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #fff;
+            font: 500 13px/1.3 Inter;
+            pointer-events: none
+        }
+
+        .mapcard .mlock {
+            display: none;
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            width: 100%;
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+            place-items: end center;
+            padding: 0 0 18px
+        }
+
+        .mapcard .mlock span {
+            padding: 10px 20px;
+            border-radius: var(--pill);
+            background: rgba(10, 12, 15, .78);
+            border: 1px solid rgba(255, 255, 255, .22);
+            color: #fff;
+            font: 600 14px Inter
+        }
+
+        .mapcard.touch .mlock {
+            display: grid
+                /* touch devices only; removed from the DOM on the first tap */
+        }
+
+        .mapbtns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px
+        }
+
+        @media (max-width:699.98px) {
+            .mapcard {
+                min-height: 320px
+            }
+
+            .acts {
+                flex-direction: column;
+                align-items: stretch
+            }
+
+            .acts .btn {
+                justify-content: center
+            }
+
+            .mapbtns .btn {
+                flex: 1 1 140px;
+                justify-content: center
+            }
+        }
+
+        /* === Contact: car registration field + number plate (CSS) === */
+        #form input[name="registration"] {
+            font: 600 17px/1.25 Oswald, Inter, sans-serif;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding-left: 34px;
+            background: linear-gradient(90deg, var(--plate) 0 14px, transparent 14px), #0a0c0f;
+            transition: border-color .2s, background-color .2s, box-shadow .2s
+        }
+
+        #form input[name="registration"]::placeholder {
+            text-transform: none;
+            letter-spacing: .04em;
+            font-weight: 500
+        }
+
+        #form input[name="registration"]:focus {
+            outline: none;
+            border-color: var(--plate);
+            background: linear-gradient(90deg, var(--plate) 0 14px, rgba(242, 194, 48, .09) 14px), #0a0c0f;
+            box-shadow: 0 0 0 3px rgba(242, 194, 48, .2)
+        }
+
+        #form input[name="registration"].bad,
+        #form input[name="registration"].bad:focus {
+            border-color: #ff5b6b;
+            box-shadow: 0 0 0 3px rgba(255, 91, 107, .16), 0 0 0 5px rgba(42, 125, 225, .22)
+        }
+
+        .regblock {
+            display: grid;
+            justify-items: center;
+            gap: 8px;
+            max-width: 100%
+        }
+
+        .reglbl {
+            font-size: 12px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--steel)
+        }
+
+        .regplate {
+            position: relative;
+            display: inline-flex;
+            align-items: stretch;
+            max-width: 100%;
+            overflow: hidden;
+            border-radius: 12px;
+            background: var(--plate);
+            color: #10151a;
+            border: 2px solid #8a6d12;
+            box-shadow: 0 0 0 2px var(--plate), 0 0 34px -4px rgba(242, 194, 48, .55);
+            font-family: Oswald, Inter, sans-serif
+        }
+
+        .reggb {
+            display: grid;
+            place-items: center;
+            padding: 0 7px;
+            background: #1b4fb0;
+            color: #fff;
+            font: 600 11px/1 Oswald, sans-serif;
+            letter-spacing: .08em
+        }
+
+        .regtxt {
+            padding: 8px clamp(10px, 3vw, 20px);
+            font-weight: 700;
+            font-size: clamp(24px, 9vw, 46px);
+            line-height: 1.1;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            white-space: nowrap
+        }
+
+        .regtxt .rc {
+            display: inline-block;
+            white-space: pre
+        }
+
+        .regshine {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: -60%;
+            width: 40%;
+            pointer-events: none;
+            background: linear-gradient(105deg, transparent 0, rgba(255, 255, 255, .7) 50%, transparent 100%)
+        }
+
+        .refline {
+            color: var(--steel);
+            font-size: 13px;
+            letter-spacing: .04em
+        }
+
+        /* === /Contact: car registration === */
+
+        /* === /Contact === */
+
+        footer {
+            background: var(--panel);
+            border-radius: var(--r-panel) var(--r-panel) 0 0;
+            margin-top: 80px;
+            padding: 48px clamp(20px, 5vw, 72px) 32px
+        }
+
+        footer .in {
+            max-width: 1300px;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        footer nav {
+            all: unset;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 14px
+        }
+
+        footer small {
+            display: block;
+            max-width: 1300px;
+            margin: 32px auto 0;
+            color: var(--steel)
+        }
+
+        @media(max-width:1000px) {
+
+            .why,
+            .about,
+            .contact {
+                grid-template-columns: 1fr
+            }
+
+            .hl {
+                position: static;
+                min-height: 340px
+            }
+
+            .steps {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .bento>* {
+                grid-column: span 3 !important
+            }
+
+            .b1 {
+                grid-row: auto
+            }
+        }
+
+        @media(max-width:900px) {
+            nav ul {
+                display: none
+            }
+
+            .copy {
+                width: calc(100% - 40px);
+                top: 96px;
+                translate: 0 0;
+                margin-top: 0
+            }
+
+            .word {
+                top: 40%
+            }
+
+            .stats {
+                left: 16px;
+                right: 16px;
+                padding: 12px 18px;
+                justify-content: space-between
+            }
+        }
+
+        @media(max-width:700px) {
+            .logo span {
+                display: none
+            }
+
+            .bento>*,
+            .steps>* {
+                grid-column: 1/-1 !important
+            }
+
+            .steps {
+                grid-template-columns: 1fr
+            }
+
+            .steps .card {
+                margin-top: 0 !important
+            }
+
+            #mini.pn {
+                width: 100%
+            }
+
+            .row {
+                grid-template-columns: 1fr
+            }
+
+            .strip {
+                border-radius: var(--r-panel);
+                padding: 28px
+            }
+        }
+
+        @media(max-width:1100px) {
+            .scroll {
+                display: none
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation: none !important;
+                scroll-behavior: auto !important
+            }
+        }
+
+
+        /* ==========================================================
+           MEET NAZ + OUR WORK
+           ========================================================== */
+        :root {
+            --gx: clamp(20px, 5vw, 72px);
+            --edge: calc(max(0px, (100% - 1300px) / 2) + var(--gx))
+        }
+
+        .pill-l {
+            display: inline-block;
+            padding: 7px 16px;
+            border-radius: var(--pill);
+            background: var(--glass);
+            border: 1px solid var(--line);
+            font: 600 12px Inter;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: #c9d2dc;
+            margin-bottom: 20px
+        }
+
+        /* Meet Naz */
+        .naz {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: clamp(72px, 9vw, 112px) var(--gx) clamp(64px, 8vw, 96px);
+            scroll-margin-top: 16px;
+            display: grid;
+            grid-template-columns: 45fr 55fr;
+            gap: clamp(48px, 6vw, 88px);
+            align-items: center
+        }
+
+        .naz-fig {
+            position: relative;
+            margin-bottom: 32px
+        }
+
+        .naz-por {
+            position: relative;
+            aspect-ratio: 4/5;
+            border-radius: 32px;
+            overflow: hidden;
+            background: radial-gradient(70% 50% at 50% 38%, rgba(42, 125, 225, .28), transparent 70%), linear-gradient(160deg, #243244, #12161b 70%);
+            border: 1px solid var(--line)
+        }
+
+        .naz-por img {
+            border-radius: 0
+        }
+
+        .naz-logo {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            translate: -50% -50%;
+            width: 96px;
+            height: 96px;
+            border-radius: 50% !important;
+            object-fit: cover;
+            opacity: .9
+        }
+
+        .naz-photo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            max-width: none
+        }
+
+        .naz-quote {
+            position: absolute;
+            z-index: 3;
+            right: -40px;
+            bottom: -32px;
+            width: min(330px, 78%);
+            padding: 24px 26px;
+            border-radius: var(--r-card);
+            background: var(--blue);
+            font: 500 19px/1.4 Inter;
+            color: #fff;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, .45)
+        }
+
+        .naz-txt h2 {
+            font-size: clamp(40px, 5vw, 72px);
+            max-width: none;
+            margin-bottom: 24px
+        }
+
+        .naz-p {
+            font-size: 18px;
+            line-height: 1.7;
+            max-width: 60ch;
+            color: #d5dce5
+        }
+
+        .naz-p.naz-m {
+            margin-top: 16px;
+            color: var(--steel)
+        }
+
+        .naz-pills {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 28px 0 32px
+        }
+
+        .naz-pills li {
+            padding: 8px 16px;
+            border-radius: var(--pill);
+            background: var(--glass);
+            border: 1px solid var(--line);
+            font: 500 14px Inter;
+            color: #e8edf2
+        }
+
+        @media (max-width: 899px) {
+            .naz {
+                grid-template-columns: 1fr;
+                gap: 48px;
+                padding-top: clamp(72px, 14vw, 96px)
+            }
+
+            .naz-fig {
+                width: 100%;
+                max-width: 560px;
+                margin: 0 auto 24px
+            }
+
+            .naz-quote {
+                right: 12px;
+                bottom: -24px;
+                width: min(330px, calc(100% - 24px))
+            }
+        }
+
+        /* Our work */
+        .wk {
+            position: relative;
+            padding: 0;
+            scroll-margin-top: 0;
+            z-index: 2;
+            background: #0a0c0f;
+            overflow-x: clip;
+            --cw: min(72vw, 300px);
+            --h-odd: 430px;
+            --h-even: 460px;
+            --off: 16px;
+            --gap: 16px
+        }
+
+        .wk-pin {
+            background: #0a0c0f;
+            padding: clamp(64px, 9vw, 112px) 0
+        }
+
+        .wk-in {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 var(--gx)
+        }
+
+        .wk-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: clamp(28px, 4vw, 44px)
+        }
+
+        .wk-title h2 {
+            max-width: none;
+            margin-bottom: 14px
+        }
+
+        .wk-sub {
+            color: var(--steel);
+            font-size: 17px
+        }
+
+        .wk-view {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 12px 0 36px;
+            margin: -12px 0 -36px;
+            scroll-snap-type: x mandatory;
+            scroll-padding-left: var(--edge);
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch
+        }
+
+        .wk-view::-webkit-scrollbar {
+            display: none
+        }
+
+        .wk-track {
+            display: flex;
+            gap: var(--gap);
+            width: max-content;
+            align-items: flex-start;
+            padding: 0 var(--edge)
+        }
+
+        .wk-card {
+            position: relative;
+            flex: none;
+            width: var(--cw);
+            height: var(--h-odd);
+            margin-top: var(--off);
+            border-radius: var(--r-card);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+            text-decoration: none;
+            color: #fff;
+            scroll-snap-align: start;
+            contain: layout paint
+        }
+
+        /* Staggered rhythm: odd cards shorter and lower, even cards taller and higher */
+        .wk-card:nth-child(even) {
+            height: var(--h-even);
+            margin-top: 0
+        }
+
+        /* Colour styles (assigned per card via WORK_ITEMS tone) */
+        .tone-1 {
+            background: linear-gradient(180deg, #2a7de1, #0a0c0f)
+        }
+
+        .tone-2 {
+            background: linear-gradient(180deg, #5fb0ff, #0a0c0f)
+        }
+
+        .tone-3 {
+            background: linear-gradient(180deg, #8b96a3, #0a0c0f)
+        }
+
+        .tone-4 {
+            background: linear-gradient(180deg, #1b3a63, #0a0c0f)
+        }
+
+        /* Optional thumbnail: sits under a readability gradient; if it fails it removes itself and only the colour gradient remains */
+        .wk-card img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0;
+            max-width: none
+        }
+
+        .wk-shade {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(10, 12, 15, .1) 0%, rgba(10, 12, 15, .35) 45%, rgba(10, 12, 15, .95) 100%);
+            pointer-events: none
+        }
+
+        .wk-card img~.wk-shade {
+            display: block
+        }
+
+        .wk-card b,
+        .wk-card span.wk-v {
+            position: relative;
+            z-index: 2
+        }
+
+        .wk-card b {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font: 600 20px/1.15 Oswald;
+            text-transform: uppercase;
+            color: #fff
+        }
+
+        .wk-card span.wk-v {
+            display: block;
+            margin-top: 6px;
+            font-size: 12px;
+            color: #b9c3cf
+        }
+
+        @media (hover: hover) {
+            .wk-card::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                border-radius: inherit;
+                box-shadow: inset 0 0 0 1px rgba(95, 176, 255, .7), inset 0 -60px 60px -30px rgba(42, 125, 225, .55);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity .3s ease
+            }
+
+            .wk-card:hover::after {
+                opacity: 1
+            }
+        }
+
+        .wk-foot {
+            margin-top: 28px
+        }
+
+        .wk-prog {
+            display: none;
+            align-items: center;
+            gap: 18px
+        }
+
+        .wk-bar {
+            flex: 1;
+            height: 4px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, .12);
+            overflow: hidden
+        }
+
+        .wk-bar i {
+            display: block;
+            height: 100%;
+            border-radius: 4px;
+            background: var(--blue2);
+            transform: scaleX(0);
+            transform-origin: left
+        }
+
+        .wk-prog span {
+            font: 500 14px Oswald;
+            letter-spacing: .08em;
+            color: var(--steel)
+        }
+
+        .wk-arrows {
+            display: none;
+            gap: 10px
+        }
+
+        .wk-arrows button {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--glass);
+            border: 1px solid var(--line);
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer
+        }
+
+        .wk-arrows button:hover {
+            border-color: var(--blue2)
+        }
+
+        @media (min-width: 700px) {
+            .wk-arrows {
+                display: flex
+            }
+
+            .wk {
+                --cw: 240px;
+                --off: 32px
+            }
+        }
+
+        @media (max-width: 699px) {
+            .wk-head {
+                flex-direction: column;
+                align-items: flex-start
+            }
+
+            .wk-pin {
+                padding: 64px 0
+            }
+
+            .naz {
+                padding-bottom: 64px
+            }
+        }
+
+        /* Every section keeps its own paint inside its box (sticky still works: clip is not a scroll container) */
+        main>section:not(.wk) {
+            position: relative;
+            background: #050607;
+            overflow-x: clip
+        }
+
+        /* Pinned horizontal scroll: desktop with hover, 1000px+, motion allowed */
+        @media (hover: hover) and (min-width: 1000px) and (prefers-reduced-motion: no-preference) {
+            .wk-pin {
+                height: 100svh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 24px 0
+            }
+
+            .wk {
+                --h-even: clamp(380px, calc(100svh - 360px), 460px);
+                --h-odd: calc(var(--h-even) - 30px);
+                --cw: clamp(210px, calc(var(--h-even) * .52), 240px);
+                --off: 32px;
+                --gap: 20px
+            }
+
+            .wk-view {
+                overflow: hidden;
+                scroll-snap-type: none
+            }
+
+            .work-track {
+                will-change: transform;
+                transform: translateZ(0)
+            }
+
+            .wk-prog {
+                display: flex
+            }
+
+            .wk-arrows {
+                display: none
+            }
+        }
+
+        /* ==========================================================
+           MOBILE ONLY (max-width: 699px): navbar, hamburger menu,
+           no stats bar, car moved below the buttons.
+           Nothing here applies at 700px and above.
+           ========================================================== */
+        @media (min-width: 700px) {
+
+            .burger,
+            .mmenu {
+                display: none
+            }
+        }
+
+        @media (max-width: 699px) {
+            :root {
+                --hero-h0: max(600px, min(100svh - 32px, 820px))
+            }
+
+            /* Navbar: logo + name on the left, hamburger on the right */
+            nav>.btn {
+                display: none
+            }
+
+            .logo {
+                min-width: 0;
+                gap: 10px
+            }
+
+            .logo img {
+                width: 40px;
+                height: 40px
+            }
+
+            .logo span {
+                display: inline;
+                font-size: 18px;
+                white-space: nowrap;
+                line-height: 1
+            }
+
+            .burger {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                flex: none;
+                width: 44px;
+                height: 44px;
+                padding: 0;
+                border-radius: var(--pill);
+                background: var(--glass);
+                border: 1px solid var(--line);
+                -webkit-tap-highlight-color: transparent;
+                cursor: pointer
+            }
+
+            .burger i {
+                display: block;
+                width: 20px;
+                height: 2px;
+                border-radius: 2px;
+                background: #fff
+            }
+
+            .mmenu {
+                display: none;
+                position: fixed;
+                left: 12px;
+                right: 12px;
+                top: 80px;
+                z-index: 1000;
+                max-height: calc(100svh - 96px);
+                overflow-y: auto;
+                padding: 12px;
+                border-radius: 24px;
+                background: rgba(12, 15, 19, .94);
+                border: 1px solid var(--line);
+                backdrop-filter: blur(18px);
+                -webkit-backdrop-filter: blur(18px);
+                box-shadow: 0 24px 60px rgba(0, 0, 0, .55)
+            }
+
+            .mmenu a.ml {
+                display: flex;
+                align-items: center;
+                min-height: 56px;
+                padding: 0 18px;
+                border-radius: 16px;
+                font: 600 24px Oswald;
+                letter-spacing: .04em;
+                text-transform: uppercase;
+                text-decoration: none;
+                color: #fff
+            }
+
+            .mmenu a.ml:active {
+                background: var(--glass)
+            }
+
+            .mmenu .btn {
+                width: 100%;
+                justify-content: center;
+                margin-top: 10px;
+                padding: 16px 24px
+            }
+
+            /* Stats bar removed */
+            .stats {
+                display: none
+            }
+
+            /* The hero height is set by script on mobile (it grows to fit the lowered car).
+               Keep the background wordmark and gear where they were. */
+            .word {
+                top: calc(var(--hero-h0) * .4)
+            }
+
+            .gear {
+                top: calc(var(--hero-h0) * .06)
+            }
+
+            .streaks i:nth-child(1) {
+                top: calc(var(--hero-h0) * .55) !important
+            }
+
+            .streaks i:nth-child(2) {
+                top: calc(var(--hero-h0) * .8) !important
+            }
+
+            .streaks i:nth-child(3) {
+                top: calc(var(--hero-h0) * .3) !important
+            }
+        }
+
+        @media (max-width: 359px) {
+            .logo span {
+                font-size: 15px
+            }
+
+            .logo {
+                gap: 8px
+            }
+
+            .logo img {
+                width: 36px;
+                height: 36px
+            }
+        }
+
+        /* === Perf: Our Work pin === */
+        html.lenis,
+        html.lenis body {
+            height: auto
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important
+        }
+
+        .lenis.lenis-stopped {
+            overflow: hidden
+        }
+
+        .hero.offscreen .gear {
+            animation-play-state: paused
+        }
+
+        html.fx-off .grain::after,
+        html.fx-off .hero .shadow,
+        html.fx-off #shadow {
+            display: none
+        }
+    </style>
+</head>
+
+<body id="top">
+    <div class="wrap">
+        <header class="hero grain" id="hero">
+            <div class="glow"></div>
+            <div class="dots"></div>
+            <div class="streaks" aria-hidden="true"><i style="left:-10%;top:55%"></i><i style="left:20%;top:80%"></i><i
+                    style="left:40%;top:30%"></i></div>
+            <div class="word" aria-hidden="true">CHELSEA<br>AUTOWORX</div>
+            <svg class="gear" viewBox="0 0 100 100" aria-hidden="true">
+                <g fill="none" stroke="#5fb0ff" stroke-width="2">
+                    <circle cx="50" cy="50" r="30" />
+                    <circle cx="50" cy="50" r="12" />
+                    <path stroke-width="9" stroke-dasharray="6 6.8"
+                        d="M50 50m-38 0a38 38 0 1 0 76 0a38 38 0 1 0-76 0" />
+                </g>
+            </svg>
+            <div class="shadow" id="shadow"></div>
+            <img id="fallback" src="assets/hero-car.png" alt="BMW M3 in three-quarter front view" loading="lazy">
+            <div id="load" aria-hidden="true"></div>
+            <canvas id="cv" aria-label="Interactive 3D BMW M3. Click and drag to rotate." role="img"></canvas>
+            <div class="overlay" id="ov" aria-hidden="true">
+                <svg>
+                    <line id="l1" stroke="#5fb0ff" stroke-width="1.5" />
+                    <circle id="d1" r="5" fill="#5fb0ff" />
+                    <line id="l2" stroke="#5fb0ff" stroke-width="1.5" />
+                    <circle id="d2" r="5" fill="#5fb0ff" />
+                </svg>
+                <span class="chip" id="c1">Genuine BMW Parts</span><span class="chip" id="c2">£75 + VAT
+                    Diagnostics</span><span class="dragtip" id="tip">Click &amp; drag to rotate</span>
+            </div>
+            <nav aria-label="Main"><a class="logo" href="#top"><img src="assets/logo.png" alt="Chelsea Autoworx logo"
+                        width="42" height="42"
+                        onerror="var f=['assets/Logo.png','assets/logo.jpg','assets/logo.webp','assets/logo.svg'],i=+(this.dataset.i||0);if(i<f.length){this.dataset.i=i+1;this.src=f[i]}else{console.warn('logo not found at assets/logo.png');this.style.display='none'}"><span>Chelsea
+                        <b>Autoworx</b></span></a>
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#bmw">BMW</a></li>
+                    <li><a href="#mini">MINI</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a class="btn blue mag" href="#contact">Book a Service</a>
+                <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false"
+                    aria-controls="mmenu"><i></i><i></i><i></i></button>
+            </nav>
+            <div class="copy" id="copy">
+                <p class="tag"><i></i>Independent BMW &amp; MINI Specialist · Est. 2007</p>
+                <h1><span><b>Main dealer standards.</b></span><span><b>Without the</b></span><span><b>dealer
+                            bill.</b></span></h1>
+                <p class="sub">Factory-level servicing, diagnostics and repairs for BMW and MINI, backed by a written
+                    guarantee.</p>
+                <div class="btns"><a class="btn blue mag" href="#contact">Book a Service</a><a class="btn ghost mag"
+                        href="tel:02073860777">Call 020 7386 0777</a></div>
+            </div>
+            <div class="stats" id="stats">
+                <div><strong data-n="2007">2007</strong>established</div>
+                <div><strong><i data-n="100" style="font-style:normal">100</i>%</strong>genuine parts</div>
+                <div><strong>up to <i data-n="50" style="font-style:normal">50</i>%</strong>below dealer</div>
+            </div>
+            <div class="scroll">Scroll</div>
+        </header>
+    </div>
+
+    <!-- Mobile menu (shown only below 700px) -->
+    <div class="mmenu" id="mmenu" role="dialog" aria-label="Menu">
+        <a class="ml" href="#services">Services</a>
+        <a class="ml" href="#bmw">BMW</a>
+        <a class="ml" href="#mini">MINI</a>
+        <a class="ml" href="#about">About</a>
+        <a class="ml" href="#contact">Contact</a>
+        <a class="btn blue" href="#contact">Book a Service</a>
+    </div>
+
+    <main>
+        <!-- Services -->
+        <section class="sec" id="services">
+            <h2 data-r>Everything your BMW needs, under one arch.</h2>
+            <div class="bento">
+                <article class="card b1" data-r>
+                    <h3>BMW Servicing</h3>
+                    <p>Full and interim services to BMW schedules with genuine parts and Castrol oil. Your manufacturer
+                        warranty stays valid.</p>
+                </article>
+                <article class="card b2" data-r>
+                    <h3>MINI Servicing</h3>
+                    <p>From Cooper to JCW, serviced by people who know the platform.</p>
+                </article>
+                <article class="card b3" data-r>
+                    <h3>///M Servicing</h3>
+                    <p>M-car care for M2, M3 and M4 owners.</p>
+                </article>
+                <article class="card b4" data-r>
+                    <h3>Diagnostics</h3>
+                    <p>Dealer-equivalent fault finding, £75 + VAT.</p>
+                </article>
+                <article class="card b5" data-r>
+                    <h3>MOT Testing</h3>
+                    <p>Honest MOT results, no upselling.</p>
+                </article>
+                <article class="card b6" data-r>
+                    <h3>Bodywork</h3>
+                    <p>Repairs and refinishing to a clean factory look.</p>
+                </article>
+                <article class="card b7" data-r>
+                    <h3>Air Conditioning</h3>
+                    <p>Regas, leak checks and repairs.</p>
+                </article>
+                <article class="card b3" data-r style="grid-column:span 6">
+                    <h3>Wheel Alignment</h3>
+                    <p>Laser alignment for even tyre wear and straight tracking.</p>
+                </article>
+                <article class="card b8" data-r>
+                    <div>
+                        <h3>Fixed-price servicing</h3>
+                        <p>Oil service, Inspection 1 and Inspection 2 at a price agreed up front.</p>
+                    </div><a class="btn mag" href="#contact">Get a price</a>
+                </article>
+            </div>
+        </section>
+
+        <!-- BMW and MINI -->
+        <div class="split-wrap" id="bmwMiniWrap">
+            <section class="sec split" id="bmwMini">
+                <div class="pn grain" id="bmw" data-r>
+                    <div class="big" data-px aria-hidden="true">BMW</div>
+                    <h2>BMW, looked after properly</h2>
+                    <ul>
+                        <li>Servicing to BMW schedules</li>
+                        <li>Genuine BMW parts</li>
+                        <li>Specialist M-car knowledge</li>
+                    </ul><a class="btn blue mag" href="#contact">Book a service</a>
+                </div>
+                <div class="pn" id="mini" data-r>
+                    <div class="big" data-px aria-hidden="true">MINI</div>
+                    <h2>MINI, without the dealer mark-up</h2>
+                    <ul>
+                        <li>Cooper, S and JCW</li>
+                        <li>Fixed-price servicing</li>
+                        <li>Guaranteed workmanship</li>
+                    </ul><a class="btn mag" href="#contact">Book a service</a>
+                </div>
+            </section>
+        </div>
+
+        <!-- Why us -->
+        <section class="sec why">
+            <div>
+                <h2 data-r>Dealer standard. Independent honesty.</h2>
+                <ul>
+                    <li data-r>Your warranty stays valid</li>
+                    <li data-r>Genuine BMW parts with manufacturer warranty</li>
+                    <li data-r>Castrol oils</li>
+                    <li data-r>Dealer-equivalent diagnostics</li>
+                    <li data-r>Every job guaranteed</li>
+                    <li data-r>Plain-English advice</li>
+                </ul>
+            </div>
+            <aside class="hl grain" data-r><span class="plate" aria-label="Number plate CAW 110">CAW 110</span>
+                <h3>Full diagnostics report £75 + VAT</h3>
+                <p>One price, no hidden costs.</p>
+            </aside>
+        </section>
+
+        <!-- Numbers -->
+        <div class="strip" data-r>
+            <div><strong data-n="2007">2007</strong><span>established</span></div>
+            <div><strong><i data-n="100" style="font-style:normal">100</i>%</strong><span>genuine parts</span></div>
+            <div><strong>up to <i data-n="50" style="font-style:normal">50</i>%</strong><span>below dealer prices</span>
+            </div>
+            <div><strong data-n="1989">1989</strong><span>founder's BMW career began</span></div>
+        </div>
+
+        <!-- About -->
+        <!-- Meet Naz -->
+        <section class="naz" id="about" aria-labelledby="naz-h">
+            <div class="naz-fig">
+                <div class="naz-por">
+                    <img class="naz-logo" src="assets/logo.png" alt="" width="96" height="96" aria-hidden="true"
+                        onerror="this.style.display='none'">
+                    <img class="naz-photo" src="assets/naz.jpg" alt="Naeem Zaidi (Naz), founder of Chelsea Autoworx"
+                        width="800" height="1000" loading="lazy" style="object-fit:cover" onerror="this.remove()">
+                </div>
+                <p class="naz-quote">“I treat every car like it's going home with my family.”</p>
+            </div>
+            <div class="naz-txt">
+                <span class="pill-l">The founder</span>
+                <h2 id="naz-h">Meet Naz</h2>
+                <p class="naz-p">Naeem Zaidi, known as Naz, is a fully trained BMW technician. He started as an
+                    apprentice at Cheyne BMW Hammersmith in 1989 and rose to senior technician and technical fault
+                    advisor.</p>
+                <p class="naz-p naz-m">Over 10 years servicing, repairing and maintaining BMWs.</p>
+                <ul class="naz-pills">
+                    <li>Since 1989</li>
+                    <li>BMW-trained</li>
+                    <li>Genuine parts only</li>
+                </ul>
+                <a class="btn blue mag naz-cta" href="#contact">Book with Naz</a>
+            </div>
+        </section>
+
+        <!-- Our work (pinned horizontal scroll on desktop, swipe carousel elsewhere) -->
+        <!-- <section class="wk work" id="work" aria-labelledby="wk-h">
+            <div class="wk-pin work-pin" id="workPin">
+                <div class="wk-in wk-head">
+                    <div class="wk-title">
+                        <span class="pill-l">Our work</span>
+                        <h2 id="wk-h">Our work</h2>
+                        <p class="wk-sub">Real BMWs, real diagnostics, straight from our workshop.</p>
+                    </div>
+                    <a class="btn blue mag" href="https://www.tiktok.com/@chelsea.autoworx" target="_blank"
+                        rel="noopener">Follow @chelsea.autoworx on TikTok</a>
+                </div>
+                <div class="wk-view" id="wkView">
+                    <div class="wk-track work-track" id="track"></div>
+                </div>
+                <div class="wk-in wk-foot">
+                    <div class="wk-prog">
+                        <div class="wk-bar"><i id="wkFill"></i></div><span id="wkCount">01 / 15</span>
+                    </div>
+                    <div class="wk-arrows">
+                        <button type="button" id="wkPrev" aria-label="Previous videos">&#8592;</button>
+                        <button type="button" id="wkNext" aria-label="Next videos">&#8594;</button>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <!-- How it works -->
+        <section class="sec">
+            <h2 data-r>Four steps to a sorted car</h2>
+            <div class="steps" id="steps">
+                <svg preserveAspectRatio="none" viewBox="0 0 100 100" aria-hidden="true">
+                    <path id="stepline" d="M6 20 C 25 20,25 55,38 55 S 55 35,63 38 S 80 60,94 62" fill="none"
+                        stroke="#2a7de1" stroke-width=".5" vector-effect="non-scaling-stroke" />
+                </svg>
+                <div class="card" data-r>
+                    <h3>Book online or call</h3>
+                    <p class="muted">Tell us the car and the problem.</p>
+                </div>
+                <div class="card" data-r>
+                    <h3>We diagnose and quote</h3>
+                    <p class="muted">A clear price before any work.</p>
+                </div>
+                <div class="card" data-r>
+                    <h3>Genuine parts fitted</h3>
+                    <p class="muted">By trained technicians.</p>
+                </div>
+                <div class="card" data-r>
+                    <h3>Collect with a guarantee</h3>
+                    <p class="muted">Every job guaranteed in writing.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews (placeholder) -->
+        <section class="sec" style="max-width:none;padding-left:0;padding-right:0">
+            <h2 style="margin-left:clamp(20px,5vw,72px)">What owners say</h2>
+            <div class="mq">
+                <div class="mqt" id="mqt">
+                    <!-- PLACEHOLDER REVIEWS -->
+                    <figure class="card rev">
+                        <blockquote>Knowledgeable and straight with me about what the car needed.</blockquote>
+                        <small>Placeholder review</small>
+                    </figure>
+                    <figure class="card rev">
+                        <blockquote>Honest advice and no pressure to add extras.</blockquote><small>Placeholder
+                            review</small>
+                    </figure>
+                    <figure class="card rev">
+                        <blockquote>Great communication at every step.</blockquote><small>Placeholder review</small>
+                    </figure>
+                    <figure class="card rev">
+                        <blockquote>Fair prices compared with the main dealer.</blockquote><small>Placeholder
+                            review</small>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="sec faq" style="max-width:900px">
+            <h2 data-r>Questions, answered</h2>
+            <div id="faq"></div>
+        </section>
+
+        <!-- Contact -->
+        <section class="sec" id="contact">
+            <h2 data-r>Book your BMW in.</h2>
+            <div class="contact">
+                <div class="bookcol" id="bookCol">
+                    <form id="form" novalidate data-r aria-label="Booking request">
+                        <div class="row fi">
+                            <div class="fld"><input name="name" placeholder="Name" aria-label="Name"
+                                    autocomplete="name"></div>
+                            <div class="fld"><input name="phone" type="tel" placeholder="Phone" aria-label="Phone"
+                                    autocomplete="tel"></div>
+                        </div>
+                        <div class="fld fi"><input name="email" type="email" placeholder="Email" aria-label="Email"
+                                autocomplete="email"></div>
+                        <div class="fld fi"><input name="car" placeholder="Car model and year"
+                                aria-label="Car model and year"></div>
+                        <div class="fld fi"><input name="registration" id="registration" placeholder="e.g. AB12 CDE"
+                                aria-label="Car registration number" aria-required="true" required autocomplete="off"
+                                autocapitalize="characters" spellcheck="false" maxlength="8" inputmode="text"></div>
+                        <div class="fld fi">
+                            <select name="service" aria-label="Service type">
+                                <option value="" disabled selected hidden>Service type</option>
+                                <option>BMW servicing</option>
+                                <option>MINI servicing</option>
+                                <option>///M servicing</option>
+                                <option>Diagnostics</option>
+                                <option>MOT</option>
+                                <option>Bodywork</option>
+                                <option>Air conditioning</option>
+                                <option>Wheel alignment</option>
+                            </select>
+                        </div>
+                        <div class="fld fi"><textarea name="message" placeholder="Message"
+                                aria-label="Message"></textarea></div>
+                        <button class="btn blue fi" id="bookBtn" type="submit"><span class="lbl">Send booking
+                                request</span>
+                            <svg class="bsv" viewBox="0 0 56 56" aria-hidden="true">
+                                <circle class="rspin" cx="28" cy="28" r="22" />
+                                <circle class="rfull" cx="28" cy="28" r="22" transform="rotate(-90 28 28)" />
+                                <path class="bchk" d="M18 29l7 7 13-14" />
+                            </svg></button>
+                        <div class="berr" id="bookErr" role="alert" hidden>
+                            <p>Something went wrong. Please call <a href="tel:02073860777">020 7386 0777</a></p>
+                            <button class="btn ghost" type="button" id="tryAgain">Try again</button>
+                        </div>
+                    </form>
+
+                    <!-- Success panel: a normal block card. Its content is visible by default in CSS; the reveal only animates it FROM hidden. -->
+                    <div id="bookOk" role="status" aria-live="polite" tabindex="-1" hidden>
+                        <div class="okmark"><i class="okrip"></i>
+                            <div class="okc"><svg viewBox="0 0 64 64" aria-hidden="true">
+                                    <path class="okchk" pathLength="1" d="M18 33l10 10 18-22" />
+                                </svg></div>
+                        </div>
+                        <h3 id="okH" tabindex="-1">You're booked in.</h3>
+                        <p id="okMsg" class="oktxt"></p>
+                        <div class="regblock"><span class="reglbl">Your car</span>
+                            <div class="regplate" id="okPlate" role="img" aria-label="Registration"><span class="reggb"
+                                    aria-hidden="true">GB</span><span class="regtxt" id="okReg"
+                                    aria-hidden="true"></span><span class="regshine" aria-hidden="true"></span></div>
+                            <p class="refline">Booking ref: <span id="okRef">CA0000</span></p>
+                        </div>
+                        <dl class="sum" id="okSum"></dl>
+                        <div class="acts"><button class="btn blue" type="button" id="calBtn">Add to
+                                calendar</button><button class="btn ghost" type="button" id="bookAgain">Book
+                                another</button></div>
+                        <p class="oknote">We usually reply within one working day. Need us sooner? Call <a
+                                href="tel:02073860777">020 7386 0777</a>.</p>
+                    </div>
+                    <div class="cfl" id="confetti" aria-hidden="true"></div>
+                    <p class="sr" id="bookLive" aria-live="polite"></p>
+                </div>
+                <div class="mapcol">
+                    <div class="mapcard" id="mapCard">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3058.1856617727353!2d-0.21122013848820298!3d51.46949052859106!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48760f75e73770db%3A0x449ede660a9b15f3!2sChelsea%20Autoworx%20Ltd!5e1!3m2!1sen!2s!4v1790886405963!5m2!1sen!2s"
+                            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="Chelsea Autoworx location on Google Maps"></iframe>
+                        <div class="mappill">Chelsea Autoworx · Arch 45, New Kings Road, Fulham SW6 3QR</div>
+                        <button class="mlock" id="mapLock" type="button"
+                            aria-label="Tap to interact with the map"><span>Tap to interact</span></button>
+                    </div>
+                    <div class="mapbtns" data-r>
+                        <a class="btn blue"
+                            href="https://www.google.com/maps/dir/?api=1&amp;destination=Chelsea+Autoworx+Ltd%2C+Arch+45+New+Kings+Road+London+SW6+3QR"
+                            target="_blank" rel="noopener">Get directions</a>
+                        <a class="btn ghost" href="tel:02073860777">Call 020 7386 0777</a>
+                    </div>
+                    <address data-r><strong>Chelsea Autoworx Ltd</strong>Arch 45, New Kings Road, Fulham, London SW6 3QR
+                        <a href="tel:02073860777">Tel: 020 7386 0777</a><a
+                            href="mailto:info@chelseaautoworx.com">info@chelseaautoworx.com</a>
+                        <!-- Hours to be confirmed with the client -->Mon–Sat 8:30–18:00, Sunday closed
+                    </address>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="in"><a class="logo" href="#top"><img src="assets/logo.png" alt="Chelsea Autoworx logo" width="42"
+                    height="42"
+                    onerror="var f=['assets/Logo.png','assets/logo.jpg','assets/logo.webp','assets/logo.svg'],i=+(this.dataset.i||0);if(i<f.length){this.dataset.i=i+1;this.src=f[i]}else{console.warn('logo not found at assets/logo.png');this.style.display='none'}"
+                    loading="lazy"><span>Chelsea <b>Autoworx</b></span></a>
+            <nav aria-label="Footer"><a href="#services">Services</a><a href="#about">About</a><a
+                    href="#contact">Contact</a><a href="https://www.tiktok.com/@chelsea.autoworx"
+                    rel="noopener">TikTok</a></nav>
+        </div>
+        <small>© Chelsea Autoworx Ltd · BMW M3 G80 2025 by Drifter Models, licensed under CC BY 4.0</small>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+        import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+        gsap.registerPlugin(ScrollTrigger);
+        /* Low-power monitor: ONE rolling average of gsap.ticker deltas; scroll flag is a plain boolean (no layout reads) */
+        let lowFx = false, scrolling = false, scrollT = 0;
+        {
+            const root = document.documentElement, dts = []; let sum = 0, n = 0;
+            addEventListener('scroll', () => { scrolling = true; if (lowFx) root.classList.add('fx-off'); clearTimeout(scrollT); scrollT = setTimeout(() => { scrolling = false; root.classList.remove('fx-off') }, 160) }, { passive: true });
+            gsap.ticker.add((t, dt) => {
+                if (lowFx || !scrolling || document.hidden || dt > 250) return;
+                dts.push(dt); sum += dt; if (dts.length > 45) sum -= dts.shift();
+                if (dts.length === 45 && ++n % 15 === 0 && sum / 45 > 22) { lowFx = true; root.classList.add('fx-off'); console.log('[perf] low frame rate: pixel ratio 1, grain/glow hidden while scrolling'); dispatchEvent(new Event('lowfx')) }
+            })
+        }
+        const $ = s => document.querySelector(s), reduce = matchMedia('(prefers-reduced-motion:reduce)').matches, mobile = innerWidth < 900;
+
+        /* Config: body paint colour (null keeps grey) */
+        const BODY_COLOUR = null; // e.g. 0x2a7de1
+        /* Default resting pose. carYaw is relative to a pure front view (negative = nose to the lower-left) */
+        const DEFAULT_POSE = {
+            carYaw: -0.68, cameraPosition: [0, 2.1, 9.5], cameraTarget: [0, 0.35, 0], fov: 29, carScale: 3.6, carOffset: [0, 0, 0],
+            /* Phone (<700px) vertical placement, in px: space between the Call button and the top of the car (also holds the chips),
+               and space under the tyres. Used by layout(), so the intro end and the post-drag return share it. */
+            mobile: { gapBelowButtons: 96, gapBelowCar: 28 }
+        };
+        const isPhone = () => innerWidth < 700;
+        /* Screen position of the car centre as a fraction of the panel */
+        const placeFrac = () => innerWidth < 900 ? { x: .5, y: .78, w: .9 } : { x: .695, y: .64, w: .45 };
+
+
+        /* Smooth in-page anchor scrolling (JS, so ScrollTrigger measures stay correct) */
+        document.addEventListener('click', e => {
+            const a = e.target.closest('a[href^="#"]'); if (!a || a.closest('#mmenu') || e.defaultPrevented) return;
+            const id = a.getAttribute('href'); if (id.length < 2) return; const t = document.querySelector(id); if (!t) return;
+            e.preventDefault(); window.__lenis ? window.__lenis.scrollTo(t) : t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' })
+        });
+
+        /* Mobile menu (hamburger) */
+        {
+            const burger = $('#burger'), menu = $('#mmenu'), lines = burger.querySelectorAll('i'), de = document.documentElement; let open = false, busy = null;
+            const dur = reduce ? 0 : .3, place = () => { const r = $('#hero nav').getBoundingClientRect(); menu.style.top = Math.round(r.bottom + 8) + 'px' };
+            const lock = on => { de.style.overflow = on ? 'hidden' : ''; document.body.style.overflow = on ? 'hidden' : '' };
+            function setOpen(v, instant) {
+                if (v === open) return; open = v; burger.setAttribute('aria-expanded', v); burger.setAttribute('aria-label', v ? 'Close menu' : 'Open menu'); busy && busy.kill();
+                const d = instant ? 0 : dur;
+                gsap.to(lines[0], { y: v ? 7 : 0, rotation: v ? 45 : 0, duration: d, ease: 'power2.out' }); gsap.to(lines[1], { opacity: v ? 0 : 1, duration: d }); gsap.to(lines[2], { y: v ? -7 : 0, rotation: v ? -45 : 0, duration: d, ease: 'power2.out' });
+                if (v) { place(); lock(true); menu.style.display = 'block'; busy = gsap.fromTo(menu, { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: d, ease: 'power2.out' }) }
+                else { lock(false); busy = gsap.to(menu, { opacity: 0, y: -14, duration: d, ease: 'power2.in', onComplete: () => { menu.style.display = 'none' } }) }
+            }
+            burger.addEventListener('click', () => setOpen(!open));
+            menu.querySelectorAll('a').forEach(a => a.addEventListener('click', e => { const t = document.querySelector(a.getAttribute('href')); if (!t) return; e.preventDefault(); setOpen(false); t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }) }));
+            document.addEventListener('pointerdown', e => { if (open && !menu.contains(e.target) && !burger.contains(e.target)) setOpen(false) });
+            addEventListener('keydown', e => { if (e.key === 'Escape' && open) { setOpen(false); burger.focus() } });
+            addEventListener('resize', () => { if (open && !isPhone()) setOpen(false, true) });
+        }
+
+        /* Static content: FAQ, counters, form, magnetic buttons */
+        const faqs = [['Will servicing here affect my warranty?', 'No. We service to BMW schedules with genuine parts and approved oils, so your manufacturer warranty stays valid.'], ['Do you use genuine parts?', 'Yes. Genuine BMW parts with manufacturer warranty.'], ['How much is a diagnostic?', 'A full diagnostics report is £75 + VAT.'], ['Do you service MINIs?', 'Yes, all MINI models including Cooper, S and JCW.'], ['Do you do MOTs?', 'Yes. Book an MOT online or call us.'], ['How do I book?', 'Use the form below or call 020 7386 0777.']];
+        $('#faq').innerHTML = faqs.map((f, i) => `<div class="q"><button aria-expanded="false" aria-controls="a${i}" id="b${i}">${f[0]}<span aria-hidden="true">+</span></button><div class="a" id="a${i}" role="region" aria-labelledby="b${i}"><p>${f[1]}</p></div></div>`).join('');
+        document.querySelectorAll('.faq button').forEach(b => b.onclick = () => { const a = b.nextElementSibling, o = b.getAttribute('aria-expanded') === 'true'; b.setAttribute('aria-expanded', !o); b.lastChild.textContent = o ? '+' : '–'; gsap.to(a, { height: o ? 0 : a.scrollHeight, duration: reduce ? 0 : .45, ease: 'power3.out' }) });
+        /* === Contact: booking form submit animation (JS) === */
+        {
+            const q = s => document.querySelector(s);
+            const form = q('#form'), btn = q('#bookBtn'), col = q('#bookCol'), panel = q('#bookOk'), conf = q('#confetti'), errBox = q('#bookErr'), live = q('#bookLive');
+            const lbl = btn && btn.querySelector('.lbl'), svg = btn && btn.querySelector('.bsv');
+            const rspin = svg && svg.querySelector('.rspin'), rfull = svg && svg.querySelector('.rfull'), bchk = svg && svg.querySelector('.bchk');
+            if (![form, btn, col, panel, conf, errBox, lbl, svg, rspin, rfull, bchk].every(Boolean)) { console.warn('[booking] markup missing, submit animation skipped'); }
+            else {
+                const RM = reduce, small = () => matchMedia('(max-width:699.98px)').matches;
+                const escHtml = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+                const CIRC = 2 * Math.PI * 22, CHK = bchk.getTotalLength();
+                let tl = null, spin = null, busy = false, stored = null, safety = 0;
+                const items = () => gsap.utils.toArray(form.querySelectorAll(':scope > .fi'));
+                const panelKids = () => gsap.utils.toArray(panel.querySelectorAll('*'));
+                const resetSvg = () => { gsap.set(svg, { opacity: 0 }); gsap.set(rspin, { opacity: 1, rotation: 0 }); gsap.set(rfull, { strokeDasharray: CIRC, strokeDashoffset: CIRC, opacity: 1 }); gsap.set(bchk, { strokeDasharray: CHK, strokeDashoffset: CHK }) };
+                resetSvg();
+
+                /* ---------- Backend hook ----------
+                   TODO: sendBooking(data) is a PLACEHOLDER. It only logs to the console and resolves after ~1.2s, so the booking is NOT delivered anywhere yet.
+                   Connect it to Formspree / EmailJS / WhatsApp / your own API, keeping the contract: resolve = sent, reject = failed, e.g.
+                     const r = await fetch('https://formspree.io/f/YOUR_ID', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) });
+                     if (!r.ok) throw new Error('Request failed');
+                   To test the error state, make it reject: return Promise.reject(new Error('test')). */
+                function sendBooking(data) {
+                    console.log('[sendBooking] TODO not connected, booking NOT delivered:', data);
+                    return new Promise(resolve => setTimeout(() => resolve({ ok: true }), 1200));
+                }
+
+                /* ---------- Validation ---------- */
+                const rules = {
+                    name: v => v.trim().length > 1 || 'Please enter your name',
+                    phone: v => (/^\+?[\d\s().-]{7,20}$/.test(v.trim()) && v.replace(/\D/g, '').length >= 7) || 'Please enter a valid phone number',
+                    email: v => !v.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) || 'Please enter a valid email address',
+                    car: v => v.trim().length > 2 || 'Please add your car model and year',
+                    registration: v => { const t = v.trim(), c = t.replace(/\s/g, ''); return (/^[A-Za-z0-9 ]+$/.test(t) && c.length >= 2 && c.length <= 8) || 'Please enter your registration number' },
+                    service: v => !!v || 'Please choose a service'
+                };
+                /* Registration: live format (UPPERCASE, letters/numbers/single spaces only), caret kept in place */
+                const regClean = v => String(v).toUpperCase().replace(/[^A-Z0-9 ]/g, '').replace(/ {2,}/g, ' ').replace(/^ /, '');
+                const regShow = v => { const t = String(v).trim(); return (t.length === 7 && !/\s/.test(t)) ? t.slice(0, 4) + ' ' + t.slice(4) : t };
+                const regEl = form.elements.registration;
+                if (regEl) regEl.addEventListener('input', () => {
+                    const raw = regEl.value, pos = regEl.selectionStart, out = regClean(raw);
+                    if (out !== raw) { const keep = regClean(raw.slice(0, pos)).length; regEl.value = out; try { regEl.setSelectionRange(keep, keep) } catch (e) { } }
+                });
+                const clearErr = el => { el.classList.remove('bad'); el.removeAttribute('aria-invalid'); el.removeAttribute('aria-describedby'); const e = el.parentElement.querySelector('.ferr'); e && e.remove() };
+                const showErr = (el, msg) => {
+                    clearErr(el); el.classList.add('bad'); el.setAttribute('aria-invalid', 'true');
+                    const p = document.createElement('p'); p.className = 'ferr'; p.id = 'err-' + el.name; p.textContent = msg; el.setAttribute('aria-describedby', p.id); el.parentElement.appendChild(p);
+                    if (!RM) { gsap.fromTo(p, { opacity: 0, y: -4 }, { opacity: 1, y: 0, duration: .25, clearProps: 'all' }); gsap.fromTo(el, { x: -6 }, { keyframes: [{ x: 6 }, { x: -4 }, { x: 4 }, { x: 0 }], duration: .35, ease: 'none', clearProps: 'transform' }) }
+                };
+                form.addEventListener('input', e => { if (e.target.classList && e.target.classList.contains('bad')) clearErr(e.target) });
+                form.addEventListener('change', e => { if (e.target.classList && e.target.classList.contains('bad')) clearErr(e.target) });
+                const validate = () => { const bad = []; for (const k in rules) { const el = form.elements[k]; if (!el) continue; const r = rules[k](el.value); if (r !== true) { showErr(el, r); bad.push(el) } else clearErr(el) } return bad };
+
+                /* ---------- Success panel content (textContent / escaped, never raw HTML from the user) ---------- */
+                const refNo = () => 'CA' + String(1000 + Math.floor(Math.random() * 9000));
+                function fillPanel(d) {
+                    const first = d.name.trim().split(/\s+/)[0];
+                    q('#okH').textContent = "You're booked in, " + first + '.';
+                    q('#okMsg').innerHTML = `We'll call you on <b>${escHtml(d.phone.trim())}</b> to confirm your <b>${escHtml(d.service)}</b> for your <b>${escHtml(d.car.trim())}</b> (<b>${escHtml(regShow(d.registration))}</b>).`;
+                    q('#okRef').textContent = d.ref;
+                    const shown = regShow(d.registration), rt = q('#okReg'); rt.replaceChildren();
+                    for (const ch of shown) { const sp = document.createElement('span'); sp.className = 'rc'; sp.textContent = ch; rt.appendChild(sp) }
+                    q('#okPlate').setAttribute('aria-label', 'Registration ' + shown);
+                    const rows = [['Name', d.name.trim()], ['Phone', d.phone.trim()], ['Email', d.email.trim() || 'Not provided'], ['Car', d.car.trim()], ['Registration', regShow(d.registration)], ['Service', d.service], ['Message', d.message.trim() || 'None']];
+                    q('#okSum').innerHTML = rows.map(([k, v]) => `<dt>${k}</dt><dd>${escHtml(v)}</dd>`).join('');
+                    live.textContent = `Booking request sent. Reference ${d.ref}.`;
+                }
+
+                /* ---------- Add to calendar (.ics) ---------- */
+                function downloadIcs(d) {
+                    const pad = n => String(n).padStart(2, '0'), fmt = t => `${t.getFullYear()}${pad(t.getMonth() + 1)}${pad(t.getDate())}T${pad(t.getHours())}${pad(t.getMinutes())}00`;
+                    const ics = t => String(t).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
+                    const st = new Date(); st.setDate(st.getDate() + 1); while (st.getDay() === 0) st.setDate(st.getDate() + 1); st.setHours(9, 0, 0, 0); /* next open day, 09:00: placeholder until the garage confirms a real slot */
+                    const en = new Date(st.getTime() + 30 * 60000), z = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+                    const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Chelsea Autoworx//Booking//EN', 'BEGIN:VEVENT', `UID:${d.ref}-${Date.now()}@chelseaautoworx.com`, `DTSTAMP:${z}`, `DTSTART:${fmt(st)}`, `DTEND:${fmt(en)}`,
+                        'SUMMARY:' + ics(`Chelsea Autoworx: ${d.service} (${d.car.trim()})`), 'DESCRIPTION:' + ics(`Booking request ${d.ref}. Registration ${regShow(d.registration)}. Chelsea Autoworx will call ${d.phone.trim()} to confirm the date. Tel 020 7386 0777.`), 'LOCATION:' + ics('Chelsea Autoworx Ltd, Arch 45, New Kings Road, Fulham, London SW6 3QR'), 'END:VEVENT', 'END:VCALENDAR'];
+                    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' })); a.download = `chelsea-autoworx-${d.ref}.ics`;
+                    document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove() }, 500);
+                }
+
+                /* ---------- Button helpers ---------- */
+                const restoreBtn = () => {
+                    gsap.killTweensOf([btn, lbl, svg]); spin && spin.kill();
+                    gsap.set(btn, { clearProps: 'width,height,paddingLeft,paddingRight,backgroundColor,boxShadow,x,y,opacity' }); btn.style.justifySelf = '';
+                    lbl.textContent = 'Send booking request'; gsap.set(lbl, { opacity: 1 }); resetSvg(); btn.disabled = false; btn.removeAttribute('aria-busy');
+                };
+
+                /* ---------- Confetti: independent effect, own overlay, own timeline, never touches the panel ---------- */
+                function burst() {
+                    if (RM) return;
+                    try {
+                        const cr = conf.getBoundingClientRect(), okc = panel.querySelector('.okc'); if (!okc) return;
+                        const br = okc.getBoundingClientRect(), cx = br.left - cr.left + br.width / 2, cy = br.top - cr.top + br.height / 2;
+                        const n = small() ? 20 : 40, cols = ['#2a7de1', '#5fb0ff', '#ffffff', '#f2c230'], t = gsap.timeline({ onComplete: () => conf.replaceChildren() });
+                        for (let i = 0; i < n; i++) {
+                            const p = document.createElement('i'), w = 5 + Math.random() * 6, h = 6 + Math.random() * 8;
+                            Object.assign(p.style, { left: cx + 'px', top: cy + 'px', width: w + 'px', height: h + 'px', background: cols[i % 4], borderRadius: Math.random() > .5 ? '50%' : '3px' });
+                            conf.appendChild(p);
+                            const dx = (Math.random() - .5) * 2 * (small() ? 130 : 230), up = 50 + Math.random() * 110, fall = 120 + Math.random() * 170, rot = (Math.random() - .5) * 720;
+                            t.fromTo(p, { x: 0, y: 0, opacity: 1, rotation: 0 }, { x: dx * .6, y: -up, rotation: rot * .5, duration: .45, ease: 'power2.out' }, 0)
+                                .to(p, { x: dx, y: fall, rotation: rot, opacity: 0, duration: 1.15, ease: 'power2.in' }, .45); /* ~1.6s in total */
+                        }
+                    } catch (err) { console.warn('[booking] confetti failed (ignored):', err) }
+                }
+
+                function platePlay() {
+                    if (RM) return;
+                    const plate = q('#okPlate'), shine = plate.querySelector('.regshine'), chars = plate.querySelectorAll('.rc');
+                    gsap.from(plate, { y: 26, scale: .9, duration: .5, ease: 'back.out(1.6)', clearProps: 'all' });
+                    gsap.fromTo(shine, { left: '-60%' }, { left: '130%', duration: .8, delay: .4, ease: 'power2.inOut', clearProps: 'all' });
+                    gsap.from(chars, { opacity: 0, y: 6, duration: .2, stagger: .05, delay: .35, clearProps: 'all' });
+                }
+
+                /* ---------- Safety net: never leave an empty card ---------- */
+                function ensureVisible() {
+                    const h = q('#okH'); if (!h || panel.hidden) return;
+                    if (+getComputedStyle(h).opacity < .99 || h.getBoundingClientRect().height < 2) {
+                        console.warn('[booking] success content not visible, forcing the final state');
+                        tl && tl.kill(); gsap.killTweensOf(panelKids()); gsap.set(panelKids(), { clearProps: 'all' });
+                        gsap.set(h, { opacity: 1, y: 0, height: 'auto' }); gsap.set(col, { clearProps: 'height,overflow' }); form.style.display = 'none';
+                    }
+                }
+                const armSafety = () => { clearTimeout(safety); safety = setTimeout(ensureVisible, 2000) };
+
+                /* Show the panel immediately (used by reduced motion and as the fallback if the sequence ever throws) */
+                function showPanelNow(d, fade) {
+                    try { fillPanel(d) } catch (e) { console.warn(e) }
+                    const h = form.offsetHeight; panel.style.minHeight = h ? h + 'px' : ''; form.style.display = 'none'; panel.hidden = false; gsap.set(col, { clearProps: 'height,overflow' });
+                    if (fade && !RM) { /* nothing */ }
+                    if (fade && RM) gsap.from(panel, { opacity: 0, duration: .4, clearProps: 'all', immediateRender: true });
+                    panel.querySelector('h3').focus({ preventScroll: true }); busy = false; armSafety(); ScrollTrigger.refresh();
+                }
+
+                /* ---------- Failure state ---------- */
+                function fail(err) {
+                    console.error('[booking] sendBooking failed:', err); spin && spin.kill(); tl && tl.kill();
+                    if (RM || !stored) restoreBtn();
+                    else gsap.timeline({ onComplete: () => { busy = false } })
+                        .to(btn, { backgroundColor: '#c43a4b', boxShadow: '0 10px 30px -8px rgba(196,58,75,.7)', duration: .2 })
+                        .to(btn, { keyframes: [{ x: -8 }, { x: 8 }, { x: -6 }, { x: 6 }, { x: 0 }], duration: .4, ease: 'none' })
+                        .to(svg, { opacity: 0, duration: .15 }, '<')
+                        .to(btn, { width: stored.w, height: stored.h, paddingLeft: 24, paddingRight: 24, duration: .3, ease: 'power2.inOut' })
+                        .to(lbl, { opacity: 1, duration: .2 }, '<.1')
+                        .add(restoreBtn);
+                    busy = false; errBox.hidden = false; gsap.fromTo(errBox, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .35, delay: RM ? 0 : .5, clearProps: 'all' });
+                    q('#tryAgain').focus({ preventScroll: true });
+                }
+
+                /* ---------- Main sequence: ONE master timeline ---------- */
+                function onOk(d) {
+                    try {
+                        fillPanel(d);
+                        /* measure the success panel (it is a normal block) without showing it */
+                        const formH = form.offsetHeight; panel.style.minHeight = formH + 'px'; panel.hidden = false; const ph = panel.offsetHeight; panel.hidden = true;
+                        const fl = items(), g = (sel) => panel.querySelector(sel);
+                        const badge = g('.okc'), chk = g('.okchk'), rip = g('.okrip'), txt = [g('#okH'), g('#okMsg'), g('.regblock')], sum = g('#okSum'), acts = g('.acts'), note = g('.oknote');
+                        if (![badge, chk, rip, sum, acts].every(Boolean) || txt.some(x => !x)) throw new Error('success panel elements missing');
+                        const F = { immediateRender: false, clearProps: 'all' }; /* animate FROM hidden; end in the natural CSS state */
+
+                        tl.addLabel('ok')
+                            .to(rspin, { opacity: 0, duration: .12 }, 'ok')
+                            .fromTo(rfull, { strokeDashoffset: CIRC }, { strokeDashoffset: 0, duration: .3, ease: 'power1.inOut' }, 'ok')
+                            .to(bchk, { strokeDashoffset: 0, duration: .3 }, 'ok+=.28')
+                            .to(btn, { backgroundColor: '#1fa3b8', duration: .3 }, 'ok+=.28')
+                            .fromTo(btn, { boxShadow: '0 0 0 0 rgba(31,163,184,.65)' }, { boxShadow: '0 0 0 16px rgba(31,163,184,0)', duration: .6 }, 'ok+=.3')
+                            /* form leaves: fields stagger out while the column locks its height */
+                            .call(() => { col.style.height = formH + 'px'; col.style.overflow = 'hidden' }, null, 'ok+=.4')
+                            .to(fl, { opacity: 0, y: -20, duration: .2, stagger: .04 }, 'ok+=.45')
+                            .call(() => { form.style.display = 'none'; panel.hidden = false; armSafety(); const r = panel.getBoundingClientRect(); if (r.top < 90 || r.bottom > innerHeight) panel.scrollIntoView({ behavior: 'smooth', block: ph > innerHeight - 140 ? 'start' : 'center' }) }, null, 'ok+=.95')
+                            .to(col, { height: ph, duration: .45, ease: 'power3.inOut', immediateRender: false, onComplete: () => gsap.set(col, { clearProps: 'height,overflow' }) }, 'ok+=.95')
+                            /* success panel in: every piece animates FROM hidden */
+                            .from(badge, { scale: 0, duration: .5, ease: 'back.out(2)', ...F }, 'ok+=.95')
+                            .from(chk, { strokeDashoffset: 1, duration: .4, ...F }, 'ok+=1.15')
+                            .fromTo(rip, { opacity: .7, scale: 1 }, { opacity: 0, scale: 2.4, duration: .8, ease: 'power2.out', immediateRender: false }, 'ok+=1.0')
+                            .from(txt, { y: 22, opacity: 0, duration: .5, stagger: .1, ...F }, 'ok+=1.15')
+                            .from(sum, { y: 28, opacity: 0, duration: .5, ...F }, 'ok+=1.5')
+                            .from([acts, note].filter(Boolean), { y: 20, opacity: 0, duration: .45, stagger: .08, ...F }, 'ok+=1.75')
+                            /* confetti: separate effect, errors are swallowed inside burst() */
+                            .call(() => { try { burst() } catch (e) { console.warn(e) } }, null, 'ok+=1.0')
+                            /* number plate: slide up + scale from .9, one shine sweep, characters reveal (all animate FROM hidden) */
+                            .call(() => { try { platePlay() } catch (e) { console.warn('[booking] plate animation failed (ignored):', e) } }, null, 'ok+=1.4')
+                            .call(() => { try { panel.querySelector('h3').focus({ preventScroll: true }) } catch (e) { } }, null, 'ok+=1.7')
+                            .call(() => { busy = false; ScrollTrigger.refresh() }, null, '>');
+                        tl.resume();
+                    } catch (err) {
+                        console.warn('[booking] animation failed, showing the success panel directly:', err);
+                        tl && tl.kill(); showPanelNow(d, false);
+                    }
+                }
+
+                function submit() {
+                    if (busy) return;
+                    errBox.hidden = true;
+                    const bad = validate(); if (bad.length) { bad[0].focus(); return }
+                    const d = Object.fromEntries(new FormData(form)); d.registration = (d.registration || '').trim().replace(/\s+/g, ' '); d.ref = refNo();
+                    busy = true; btn.disabled = true; btn.setAttribute('aria-busy', 'true');
+                    if (RM) { /* reduced motion: no morph, no confetti, simple crossfade */
+                        lbl.textContent = 'Sending…';
+                        sendBooking(d).then(() => { restoreBtn(); btn.disabled = true; showPanelNow(d, true) }, fail);
+                        return;
+                    }
+                    const w = btn.offsetWidth, h = btn.offsetHeight; stored = { w, h }; btn.style.justifySelf = 'center'; gsap.set(btn, { width: w, height: h });
+                    let netDone = false;
+                    tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+                    tl.to(lbl, { opacity: 0, duration: .15 }, 0)
+                        .to(btn, { width: 56, height: 56, paddingLeft: 0, paddingRight: 0, duration: .3, ease: 'power2.inOut' }, 0)
+                        .to(svg, { opacity: 1, duration: .2 }, .1)
+                        .call(() => { spin = gsap.to(rspin, { rotation: 360, svgOrigin: '28 28', duration: .8, ease: 'none', repeat: -1 }); if (!netDone) tl.pause() });
+                    sendBooking(d).then(() => { netDone = true; spin && spin.kill(); onOk(d) }, fail);
+                    lastData = d;
+                }
+                let lastData = null;
+                form.addEventListener('submit', e => { e.preventDefault(); submit() });
+                q('#tryAgain').addEventListener('click', () => { errBox.hidden = true; busy = false; restoreBtn(); submit() });
+                q('#calBtn').addEventListener('click', () => { try { lastData && downloadIcs(lastData) } catch (e) { console.warn('[booking] .ics failed', e) } });
+
+                /* ---------- Book another: full restore ---------- */
+                q('#bookAgain').addEventListener('click', () => {
+                    tl && tl.kill(); clearTimeout(safety); conf.replaceChildren(); live.textContent = '';
+                    gsap.killTweensOf(panelKids()); gsap.killTweensOf([col, panel]);
+                    panel.hidden = true; panel.style.minHeight = ''; gsap.set(panelKids(), { clearProps: 'all' });
+                    gsap.set(col, { clearProps: 'height,overflow' });
+                    form.reset(); form.querySelectorAll('.bad').forEach(clearErr);
+                    { const rt = q('#okReg'); rt && rt.replaceChildren(); const pl = q('#okPlate'); pl && pl.setAttribute('aria-label', 'Registration'); q('#okRef').textContent = 'CA0000'; if (regEl) regEl.value = '' } errBox.hidden = true;
+                    form.style.display = ''; restoreBtn(); busy = false;
+                    const fl = items(); gsap.killTweensOf(fl); gsap.set(fl, { clearProps: 'all' }); gsap.set(form, { clearProps: 'height,overflow,opacity' });
+                    if (!RM) gsap.from(fl, { opacity: 0, y: 20, duration: .4, stagger: .05, clearProps: 'all' });
+                    const r = form.getBoundingClientRect(); if (r.top < 90 || r.bottom > innerHeight) form.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'center' });
+                    form.elements.name.focus({ preventScroll: true }); ScrollTrigger.refresh();
+                });
+
+                /* ---------- "Book a Service" links: smooth-scroll (anchor script) then focus + highlight pulse ---------- */
+                document.addEventListener('click', e => {
+                    const a = e.target.closest('a[href="#contact"]'); if (!a) return;
+                    let done = false; const go = () => {
+                        if (done) return; done = true; removeEventListener('scrollend', go);
+                        if (!panel.hidden || form.style.display === 'none') return;
+                        form.elements.name.focus({ preventScroll: true });
+                        if (!RM) gsap.fromTo(form, { boxShadow: '0 0 0 0 rgba(95,176,255,0)' }, { boxShadow: '0 0 0 5px rgba(95,176,255,.35), 0 0 46px rgba(42,125,225,.55)', duration: .5, yoyo: true, repeat: 1, ease: 'sine.inOut', clearProps: 'boxShadow' });
+                    };
+                    if ('onscrollend' in window) addEventListener('scrollend', go, { once: true });
+                    setTimeout(go, 1100);
+                });
+            }
+        }
+        /* === /Contact: booking form === */
+
+        /* === Contact: Google map (JS) === */
+        {
+            const card = $('#mapCard'), lock = $('#mapLock');
+            if (card && lock) {
+                /* touch devices: a "Tap to interact" overlay keeps the iframe from capturing page scroll; the first tap removes it for good */
+                if (matchMedia('(pointer:coarse)').matches) { card.classList.add('touch'); lock.addEventListener('click', () => lock.remove(), { once: true }) } else lock.remove();
+                /* soft reveal: fade + scale from .96 + blur to sharp */
+                if (!reduce) gsap.fromTo(card, { opacity: 0, scale: .96, filter: 'blur(10px)' }, { opacity: 1, scale: 1, filter: 'blur(0px)', duration: .9, ease: 'power3.out', clearProps: 'filter,transform', scrollTrigger: { trigger: card, start: 'top 88%', once: true } });
+            }
+        }
+        /* === /Contact: Google map === */
+        document.querySelectorAll('[data-n]').forEach(el => { const n = +el.dataset.n, o = { v: 0 }; ScrollTrigger.create({ trigger: el, start: 'top 95%', once: true, onEnter: () => gsap.to(o, { v: n, duration: reduce ? 0 : 1.8, ease: 'power2.out', onUpdate: () => el.textContent = Math.round(o.v) }) }) });
+        if (!reduce && matchMedia('(hover:hover)').matches) document.querySelectorAll('.mag').forEach(b => { b.onmousemove = e => { const r = b.getBoundingClientRect(); gsap.to(b, { x: (e.clientX - r.left - r.width / 2) * .25, y: (e.clientY - r.top - r.height / 2) * .25, duration: .3 }) }; b.onmouseleave = () => gsap.to(b, { x: 0, y: 0, duration: .5, ease: 'elastic.out(1,.5)' }) });
+
+        /* === BMW / MINI scroll-linked entrance (JS) ===
+           One scrubbed trigger per card, each finishing on its OWN position, well before the card is centred on screen.
+           Transforms/opacity only, no pin (no pin-spacer), nothing on section wrappers.
+           Created here (page order) so it sits before Why Us / About / Our Work in ScrollTrigger's refresh order. */
+        {
+            const bmw = $('#bmw'), mini = $('#mini');
+            if (bmw && mini) {
+                const mmCards = gsap.matchMedia();
+                mmCards.add({
+                    full: '(min-width:700px) and (prefers-reduced-motion:no-preference)',
+                    small: '(max-width:699.98px) and (prefers-reduced-motion:no-preference)'
+                    /* reduced motion matches neither: no tweens, cards stay visible at their final positions */
+                }, ctx => {
+                    const travel = ctx.conditions.small ? 30 : 70;
+                    const entrance = (card, dir, start, end) => {
+                        const big = card.querySelector('.big');
+                        let hot = false;
+                        const setHot = on => { if (on !== hot) { hot = on; card.style.willChange = on ? 'transform' : '' } }; /* only while moving */
+                        const tl = gsap.timeline({
+                            defaults: { ease: 'none' },
+                            scrollTrigger: { trigger: card, start, end, scrub: .6, invalidateOnRefresh: true },
+                            onUpdate: () => { const p = tl.progress(); setHot(p > 0 && p < 1) },
+                            onComplete: () => setHot(false), onReverseComplete: () => setHot(false)
+                        });
+                        /* end state is exactly x:0 / opacity:1; clearProps removes any leftover transform on the card itself */
+                        tl.fromTo(card, { xPercent: dir * travel, opacity: .2 }, { xPercent: 0, opacity: 1, clearProps: 'transform' }, 0)
+                            /* layered extra: the outlined word drifts ~7% of its width against the card direction (no clearProps: keeps the data-px parallax) */
+                            .fromTo(big, { x: () => -dir * big.offsetWidth * .07 }, { x: 0 }, 0);
+                        return () => setHot(false);
+                    };
+                    const offBmw = entrance(bmw, -1, 'top 95%', 'top 55%'), offMini = entrance(mini, 1, 'top 98%', 'top 60%');
+                    return () => { offBmw(); offMini() } /* matchMedia reverts the tweens and their inline styles */
+                });
+                let ct; const cardsRefresh = () => { clearTimeout(ct); ct = setTimeout(() => ScrollTrigger.refresh(), 150) };
+                document.fonts && document.fonts.ready.then(cardsRefresh);
+                addEventListener('hero-ready', cardsRefresh); addEventListener('resize', cardsRefresh); addEventListener('orientationchange', cardsRefresh);
+            }
+        }
+        /* === /BMW / MINI scroll-linked entrance === */
+
+        /* Reviews: duplicate for seamless marquee */
+        $('#mqt').innerHTML += $('#mqt').innerHTML;
+
+        /* ==========================================================
+           MEET NAZ animation + OUR WORK (data-driven cards, pinned scroll / swipe carousel)
+           ========================================================== */
+        /* Edit this array to add or change a card. Thumbnails: assets/work/work-NN.jpg, url: the TikTok video. */
+        const TT = 'https://www.tiktok.com/@chelsea.autoworx';
+        /* tone 1-4 = card colour style (.tone-1 blue, .tone-2 sky blue, .tone-3 steel grey, .tone-4 navy) */
+        const WORK_ITEMS = [
+            { title: 'BMW M3 G80', views: '25.1K', tone: 1, img: 'assets/work/work-01.jpg', url: TT },
+            { title: 'M235i Diagnostics', views: '12.7K', tone: 2, img: 'assets/work/work-02.jpg', url: TT },
+            { title: 'B58 Major Service', views: '15.9K', tone: 3, img: 'assets/work/work-03.jpg', url: TT },
+            { title: 'Independent Specialist Fulham', views: '20.1K', tone: 4, img: 'assets/work/work-04.jpg', url: TT },
+            // replace with real views (cards 5-15)
+            { title: 'Front Brake Discs and Pads', views: 'New', tone: 1, img: 'assets/work/work-05.jpg', url: TT },
+            { title: 'Oil Service the Right Way', views: 'New', tone: 2, img: 'assets/work/work-06.jpg', url: TT },
+            { title: 'Inspection 1 Walkthrough', views: 'New', tone: 3, img: 'assets/work/work-07.jpg', url: TT },
+            { title: 'Inspection 2 Walkthrough', views: 'New', tone: 4, img: 'assets/work/work-08.jpg', url: TT },
+            { title: 'Diagnostics Part 1', views: 'New', tone: 1, img: 'assets/work/work-09.jpg', url: TT },
+            { title: 'Diagnostics Part 2', views: 'New', tone: 2, img: 'assets/work/work-10.jpg', url: TT },
+            { title: 'Window Regulator Repair', views: 'New', tone: 3, img: 'assets/work/work-11.jpg', url: TT },
+            { title: 'MINI Cooper S Service', views: 'New', tone: 4, img: 'assets/work/work-12.jpg', url: TT },
+            { title: 'Air Conditioning Regas', views: 'New', tone: 1, img: 'assets/work/work-13.jpg', url: TT },
+            { title: 'MOT Preparation Checks', views: 'New', tone: 2, img: 'assets/work/work-14.jpg', url: TT },
+            { title: 'A Day at the Workshop', views: 'New', tone: 3, img: 'assets/work/work-15.jpg', url: TT }
+        ];
+        {
+            const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+            const N = WORK_ITEMS.length, track = $('#track'), view = $('#wkView');
+            const viewsText = v => /^\d/.test(v) ? v + ' views' : v;
+            track.innerHTML = WORK_ITEMS.map((it, i) => `<a class="wk-card tone-${it.tone}" href="${esc(it.url)}" target="_blank" rel="noopener" aria-label="${esc(it.title)} on TikTok"><img src="${esc(it.img)}" alt="" width="360" height="640" loading="${i < 6 ? 'eager' : 'lazy'}" decoding="async" onerror="this.remove()"><span class="wk-shade"></span><b>${esc(it.title)}</b><span class="wk-v">${esc(viewsText(it.views))}</span></a>`).join('');
+            $('#wkCount').textContent = '01 / ' + String(N).padStart(2, '0');
+
+            /* Arrows (swipe-carousel mode on wider screens) */
+            const step = () => { const c = track.querySelector('.wk-card'); return (c.offsetWidth + 16) * 2 };
+            $('#wkPrev').onclick = () => view.scrollBy({ left: -step(), behavior: 'smooth' });
+            $('#wkNext').onclick = () => view.scrollBy({ left: step(), behavior: 'smooth' });
+
+            /* Pinned horizontal scroll (built on load, after fonts; only .work-pin is pinned) */
+            const pad2 = n => String(n).padStart(2, '0'), rightPadding = 0 /* already inside .work-track padding-right, equal to the left edge */;
+            const fillEl = $('#wkFill'), countEl = $('#wkCount'); let lastN = -1;
+            const progressUI = p => { fillEl.style.transform = 'scaleX(' + p + ')'; const k = Math.min(N, Math.round(p * (N - 1)) + 1); if (k !== lastN) { lastN = k; countEl.textContent = pad2(k) + ' / ' + pad2(N) } };
+            const mm = gsap.matchMedia();
+            const initWork = async () => {
+                try { await document.fonts.ready } catch (e) { }
+                gsap.context(() => {
+                    mm.add('(hover:hover) and (min-width:1000px) and (prefers-reduced-motion:no-preference)', () => {
+                        /* Lenis: even wheel steps. Desktop only; touch stays native; never under reduced motion */
+                        const lenis = new Lenis({ lerp: 0.1, smoothWheel: true, wheelMultiplier: 1, syncTouch: false });
+                        window.__lenis = lenis; lenis.on('scroll', ScrollTrigger.update);
+                        const lt = t => lenis.raf(t * 1000); gsap.ticker.add(lt); gsap.ticker.lagSmoothing(0);
+                        const getDistance = () => Math.max(0, track.scrollWidth - document.documentElement.clientWidth + rightPadding);
+                        lastN = -1; progressUI(0);
+                        gsap.to(track, {
+                            x: () => -getDistance(), ease: 'none',
+                            scrollTrigger: {
+                                trigger: '.work-pin', start: 'top top', end: () => '+=' + getDistance() * 1.25, pin: true, pinSpacing: true, scrub: 0.6, anticipatePin: 1,
+                                fastScrollEnd: true, invalidateOnRefresh: true, refreshPriority: 1 /* refresh first so its pin-spacer is in place for everything below */,
+                                onUpdate: self => progressUI(self.progress)
+                            }
+                        });
+                        return () => { gsap.ticker.remove(lt); lenis.destroy(); window.__lenis = null; gsap.ticker.lagSmoothing(500, 33); gsap.set(track, { clearProps: 'transform' }); lastN = -1; progressUI(0) }
+                    })
+                });
+                ScrollTrigger.refresh()
+            };
+            document.readyState === 'complete' ? initWork() : addEventListener('load', initWork);
+            /* Re-measure after the hero model (page height), images, resize and rotation */
+            let rt; const refresh = () => { clearTimeout(rt); rt = setTimeout(() => ScrollTrigger.refresh(), 150) };
+            addEventListener('hero-ready', refresh); addEventListener('resize', refresh); addEventListener('orientationchange', refresh);
+            track.querySelectorAll('img').forEach(i => { i.addEventListener('load', refresh); i.addEventListener('error', refresh) });
+
+            /* Meet Naz: portrait reveals, text staggers in, quote pops last */
+            if (!reduce) {
+                const tl = gsap.timeline({ scrollTrigger: { trigger: '#about', start: 'top 70%', once: true } });
+                tl.fromTo('.naz-por', { clipPath: 'inset(10% 10% 10% 10%)', scale: .94, opacity: 0 }, { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, opacity: 1, duration: 1, ease: 'power3.out', clearProps: 'clipPath,scale' })
+                    .from('.naz-txt>*', { y: 24, opacity: 0, duration: .7, ease: 'power3.out', stagger: .09 }, .25)
+                    .from('.naz-quote', { scale: .85, y: 20, opacity: 0, duration: .6, ease: 'back.out(1.6)' }, '>-.1')
+            }
+        }
+
+        /* Reveals: fade + translate + slight blur */
+        if (!reduce) {
+            document.querySelectorAll('[data-r]:not(#bmw):not(#mini)').forEach((el, i) => gsap.from(el, { opacity: 0, y: 36, filter: 'blur(8px)', duration: .9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%' } }));
+            document.querySelectorAll('[data-px]').forEach(el => gsap.to(el, { xPercent: -12, scrollTrigger: { trigger: el.parentElement, scrub: true } }));
+            /* Steps line draws on scroll */
+            const p = $('#stepline'), L = p.getTotalLength ? p.getTotalLength() : 1000; gsap.set(p, { strokeDasharray: L, strokeDashoffset: L }); gsap.to(p, { strokeDashoffset: 0, ease: 'none', scrollTrigger: { trigger: '#steps', start: 'top 80%', end: 'bottom 60%', scrub: true } });
+            /* Hero scroll: headline lifts and fades */
+            gsap.to('#copy', { y: -80, opacity: 0, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom 20%', scrub: true } });
+        }
+
+        /* Hero: 3D car */
+        const hero = $('#hero'), cv = $('#cv');
+        const showFallback = () => { dispatchEvent(new Event('hero-ready')); $('#fallback').style.display = 'block'; $('#load') && $('#load').remove(); cv.remove(); gsap.to('.chip', { opacity: 0 }); introText() };
+        function introText() { if (reduce) return; gsap.from('#copy h1 b', { yPercent: 110, duration: 1, ease: 'expo.out', stagger: .08 }); gsap.from('.sub,.btns,.stats', { y: 24, opacity: 0, duration: .9, ease: 'power3.out', stagger: .1, delay: .4 }) }
+        const gl = (() => { try { return !!document.createElement('canvas').getContext('webgl2') } catch (e) { return false } })();
+        if (!gl || reduce) { console.warn(!gl ? 'WebGL unavailable' : 'reduced motion'); showFallback() } else {
+            gsap.from(hero, { opacity: 0, scale: .96, duration: 1, ease: 'power3.out' });
+            const renderer = new THREE.WebGLRenderer({ canvas: cv, alpha: true, antialias: true }); renderer.setClearAlpha(0);
+            renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.shadowMap.enabled = false;
+            const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(DEFAULT_POSE.fov, 1, .1, 1000);
+            const pmrem = new THREE.PMREMGenerator(renderer); scene.environment = pmrem.fromScene(new RoomEnvironment(), .04).texture;
+            const rim = new THREE.DirectionalLight(0x5fb0ff, 3); rim.position.set(4, 3, -5); const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(-4, 6, 4); scene.add(rim, key);
+            const root = new THREE.Group(), car = new THREE.Group(); scene.add(root); root.add(car);
+            const state = { yaw: DEFAULT_POSE.carYaw, pitch: 0, z: 0, dip: 0 }; let active = false, visible = true, ready = false, dragging = false, model, wheels = [], wheelNodes = [], glowMats = [], meshes = [];
+            const A1 = new THREE.Object3D(), A2 = new THREE.Object3D(); car.add(A1, A2);
+
+            function resize() { const w = hero.clientWidth, h = hero.clientHeight; renderer.setPixelRatio(lowFx ? 1 : Math.min(devicePixelRatio, mobile ? 1.5 : 2)); renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); layout() }
+            let baseScale = 1, carH = .3, yawComp = 0, chipPos = null;
+            function defYaw() { return DEFAULT_POSE.carYaw - yawComp }
+            let samples = null;
+            function screenBox() {
+                const o = { minx: 9, maxx: -9, miny: 9, maxy: -9 }, v = new THREE.Vector3(); car.updateMatrixWorld(true);
+                if (samples) { for (let i = 0; i < samples.length; i += 3) { v.set(samples[i], samples[i + 1], samples[i + 2]).applyMatrix4(car.matrixWorld).project(cam); const x = (v.x + 1) / 2, y = (1 - v.y) / 2; if (x < o.minx) o.minx = x; if (x > o.maxx) o.maxx = x; if (y < o.miny) o.miny = y; if (y > o.maxy) o.maxy = y } return o }
+                const b = new THREE.Box3().setFromObject(car); for (let i = 0; i < 8; i++) { v.set(i & 1 ? b.max.x : b.min.x, i & 2 ? b.max.y : b.min.y, i & 4 ? b.max.z : b.min.z).project(cam); const x = (v.x + 1) / 2, y = (1 - v.y) / 2; o.minx = Math.min(o.minx, x); o.maxx = Math.max(o.maxx, x); o.miny = Math.min(o.miny, y); o.maxy = Math.max(o.maxy, y) } return o
+            }
+            /* Place the car so its centre lands at the target screen fraction at the target width */
+            function layout() {
+                if (!(isPhone() && ready && model)) {
+                    if (hero.style.height) { hero.style.height = ''; hero.style.minHeight = ''; const w = hero.clientWidth, h = hero.clientHeight; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); ScrollTrigger.refresh() }
+                    return layoutCore(placeFrac(), 50)
+                }
+                /* phone: hero height = buttons bottom + gap + car + gap under tyres. Measure the car height, then size the panel. */
+                const P = DEFAULT_POSE.mobile, cp = $('#copy'), bt = cp.querySelector('.btns'), W = hero.clientWidth, f0 = placeFrac();
+                const btnBottom = cp.offsetTop + bt.offsetTop + bt.offsetHeight, startH = hero.clientHeight;
+                const setH = h => { hero.style.minHeight = '0'; hero.style.height = h + 'px'; renderer.setSize(W, h, false); cam.aspect = W / h; cam.updateProjectionMatrix() };
+                let H = Math.max(hero.clientHeight, 640);
+                for (let i = 0; i < 3; i++) {
+                    setH(H); layoutCore({ x: f0.x, y: .5, w: f0.w }, 0);
+                    const b = screenBox(), carPx = (b.maxy - b.miny) * H, next = Math.round(btnBottom + P.gapBelowButtons + carPx + P.gapBelowCar);
+                    if (Math.abs(next - H) < 1) break; H = next
+                }
+                setH(H);
+                const b = screenBox(), carPx = (b.maxy - b.miny) * H;
+                layoutCore({ x: f0.x, y: (btnBottom + P.gapBelowButtons + carPx / 2) / H, w: f0.w }, P.gapBelowCar);
+                if (Math.abs(H - startH) > 1) ScrollTrigger.refresh()
+            }
+            function layoutCore(f, bm) {
+                const rm = innerWidth < 900 ? 16 : 40, W = hero.clientWidth, H = hero.clientHeight, S = DEFAULT_POSE.carScale, T = new THREE.Vector3(...DEFAULT_POSE.cameraTarget), dir = new THREE.Vector3(...DEFAULT_POSE.cameraPosition).sub(T), D0 = dir.length(); dir.normalize();
+                let d = D0, vw, vh; const setCam = () => { cam.position.copy(T).addScaledVector(dir, d); cam.lookAt(T); cam.updateMatrixWorld(true); vh = 2 * d * Math.tan(THREE.MathUtils.degToRad(cam.fov / 2)); vw = vh * cam.aspect };
+                setCam(); const o = DEFAULT_POSE.carOffset; root.scale.setScalar(S); root.position.set((f.x - .5) * vw + o[0], -(f.y - .5) * vh - carH * S / 2 + o[1], o[2]);
+                if (!(ready && model)) return;
+                const sr = car.rotation.clone(), sp = car.position.clone(); car.position.set(0, 0, 0);
+                /* fit: dolly the camera until the projected car is w wide, centre it on (f.x,f.y), keep 30px right / 40px bottom margins */
+                const fit = w => {
+                    for (let k = 0; k < 3; k++) {
+                        yawComp = Math.atan(root.position.x / d); car.rotation.set(0, defYaw(), 0); root.updateMatrixWorld(true); const s0 = screenBox(); d *= (s0.maxx - s0.minx) / w; setCam(); root.updateMatrixWorld(true); const t = screenBox();
+                        root.position.x += (f.x - (t.minx + t.maxx) / 2) * vw; root.position.y -= (f.y - (t.miny + t.maxy) / 2) * vh; root.updateMatrixWorld(true); const u = screenBox();
+                        root.position.x -= Math.max(0, u.maxx - (1 - rm / W)) * vw; root.position.y += Math.max(0, u.maxy - (1 - bm / H)) * vh
+                    }
+                };
+                fit(f.w);
+                /* desktop: stay clear of headline lines (16px), subtext, buttons and stats bar (40px); shrink in small steps if needed */
+                if (innerWidth >= 900) {
+                    const hr = hero.getBoundingClientRect(), k = hr.width / W, obs = [];
+                    hero.querySelectorAll('#copy h1 b').forEach(b => { const r = document.createRange(); r.selectNodeContents(b); obs.push([r.getBoundingClientRect(), 16]) });
+                    hero.querySelectorAll('.sub,.stats').forEach(e => obs.push([e.getBoundingClientRect(), 40])); hero.querySelectorAll('.btns a').forEach(e => obs.push([e.getBoundingClientRect(), 60]));
+                    const hit = () => { const t = screenBox(); return obs.some(([r, m]) => t.minx * W < (r.right - hr.left) / k + m && t.maxx * W > (r.left - hr.left) / k - m && t.miny * H < (r.bottom - hr.top) / k + m && t.maxy * H > (r.top - hr.top) / k - m) };
+                    let w = f.w; for (let n = 0; n < 10 && hit() && w > f.w * .8; n++) { w *= .97; fit(w) }
+                    if (w < f.w) console.log('car width reduced to', +(w * 100).toFixed(1) + '% to clear the text'); if (hit()) console.warn('car is still within 40px of the text block')
+                }
+                /* chips, glow and shadow follow the car's final box */
+                const bx = screenBox(), c1 = $('#c1'), c2 = $('#c2'), cl = (v, a, b) => Math.min(Math.max(v, a), b), cx = (bx.minx + bx.maxx) / 2, ww = bx.maxx - bx.minx;
+                chipPos = { c1: [cl(bx.minx * W, 8, W - c1.offsetWidth - 8), Math.max(8, bx.miny * H - 4)], c2: [cl(bx.maxx * W - c2.offsetWidth, 8, W - c2.offsetWidth - rm), Math.max(8, bx.miny * H - c2.offsetHeight - 22)] };
+                hero.style.setProperty('--gx', cx * 100 + '%'); hero.style.setProperty('--gy', (bx.maxy * 100 - 5) + '%'); hero.style.setProperty('--gw', ww * 95 + '%'); hero.style.setProperty('--gh', ww * 100 + '%');
+                const sh = $('#shadow'); sh.style.left = cx * 100 + '%'; sh.style.top = (bx.maxy * H - H * .012) + 'px'; sh.style.width = ww * 92 + '%'; sh.style.height = H * .06 + 'px'; sh.style.translate = '-50% -50%';
+                car.rotation.copy(sr); car.position.copy(sp); root.updateMatrixWorld(true)
+            }
+            addEventListener('resize', resize);
+
+            const failT = setTimeout(() => { if (!ready) { console.warn('GLB not ready after 6s, showing fallback'); showFallback() } }, 6000);
+            const loader = new GLTFLoader(); loader.setMeshoptDecoder(MeshoptDecoder);
+            requestAnimationFrame(() => setTimeout(() => loader.load('bmw-m3-web.glb', onLoad, undefined, e => { console.error('GLB load failed: ' + ((e && e.message) || (e && e.type) || String(e)) + ' (check assets/ path)'); showFallback() }), 0));
+
+            function onLoad(g) {
+                if (!cv.isConnected) return; root.scale.setScalar(1); root.position.set(0, 0, 0); car.rotation.set(0, 0, 0); car.position.set(0, 0, 0); root.updateMatrixWorld(true); console.log('GLB loaded'); model = g.scene; car.add(model); model.updateMatrixWorld(true);
+                let box = new THREE.Box3().setFromObject(model), sz = box.getSize(new THREE.Vector3());
+                /* Wheel diagnostics */
+                const names = ['WHEEL_LF', 'WHEEL_LR', 'WHEEL_RF', 'WHEEL_RR'];
+                model.traverse(o => { if (o.isMesh) { meshes.push(o); o.frustumCulled = false } });
+                console.log('meshes', meshes.length);
+                const found = names.map(n => { let f; model.traverse(o => { if (o.name.startsWith(n) && !f) f = o }); return f });
+                found.forEach((w, i) => { if (!w) return console.error('MISSING', names[i]); const b = new THREE.Box3().setFromObject(w); console.log(names[i], JSON.stringify({ pos: w.getWorldPosition(new THREE.Vector3()).toArray(), parent: w.parent && w.parent.name, visible: w.visible, box: [b.min.toArray(), b.max.toArray()] })) });
+                /* Long axis & front direction (via headlights) */
+                const longX = sz.x > sz.z; let hl = new THREE.Vector3(), hn = 0; model.traverse(o => { if (/^M4_2024_headlight_[LR]/.test(o.name) && !o.isMesh && o.children.length) { hl.add(new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3())); hn++ } });
+                hl.divideScalar(Math.max(hn, 1)); const c = box.getCenter(new THREE.Vector3()), axis = longX ? 'x' : 'z', sign = Math.sign(hl[axis] - c[axis]) || 1;
+                /* Orient so the nose faces +z, then centre on origin and normalise length to ~1.15 */
+                model.rotation.y = longX ? (sign > 0 ? -Math.PI / 2 : Math.PI / 2) : (sign > 0 ? 0 : Math.PI); model.updateMatrixWorld(true);
+                box = new THREE.Box3().setFromObject(model); sz = box.getSize(new THREE.Vector3()); const s = 1.15 / sz.z;
+                model.scale.setScalar(s); model.position.set(0, 0, 0); model.updateMatrixWorld(true); box.setFromObject(model); const cc = box.getCenter(new THREE.Vector3()); model.position.set(-cc.x, -box.min.y, -cc.z); model.updateMatrixWorld(true); box.setFromObject(model);
+                /* Wheel pivots: rotate around each wheel's own centre on its axle (smallest bbox dimension) */
+                /* Wheel pivots (nodes are WHEEL_xx_<n>, identity transform, geometry baked at the wheel position):
+                   pivot at the wheel's bbox centre, wheel re-parented into it via attach() (keeps world pose, offsets by -centre) */
+                found.forEach((w, i) => {
+                    try {
+                        if (!w) return; wheelNodes.push(w); w.traverse(m => { m.visible = true; m.frustumCulled = false });
+                        const b = new THREE.Box3().setFromObject(w), ctr = b.getCenter(new THREE.Vector3()), size = b.getSize(new THREE.Vector3());
+                        const ax = size.x < size.z ? 'x' : 'z'; /* axle = thinnest side of the wheel box (car faces +z, so normally x) */
+                        const piv = new THREE.Object3D(); piv.name = names[i] + '_pivot'; w.parent.add(piv); piv.position.copy(w.parent.worldToLocal(ctr.clone())); piv.updateMatrixWorld(true); piv.attach(w);
+                        const local = new THREE.Vector3(ax === 'x' ? 1 : 0, 0, ax === 'z' ? 1 : 0).transformDirection(new THREE.Matrix4().copy(piv.matrixWorld).invert());
+                        /* wobble test: spinning must not move the wheel centre; otherwise spin is disabled for this wheel */
+                        piv.rotateOnAxis(local, 1.3); piv.updateMatrixWorld(true); const drift = new THREE.Box3().setFromObject(w).getCenter(new THREE.Vector3()).distanceTo(ctr); piv.rotateOnAxis(local, -1.3); piv.updateMatrixWorld(true);
+                        const ok = drift < .025; console.log(names[i], 'size', JSON.stringify(size.toArray().map(v => +v.toFixed(3))), 'axle axis', ax, 'drift', +drift.toFixed(4), ok ? 'spin ON' : 'spin OFF (wheel stays in arch)');
+                        if (ok) wheels.push({ piv, local })
+                    } catch (err) { console.warn('wheel skipped', err.message) }
+                });
+                /* Body paint: material with clearcoat/metal on the largest meshes; log all materials */
+                try {
+                    const mats = new Map(); meshes.forEach(m => { const mm = m.material, a = new THREE.Box3().setFromObject(m).getSize(new THREE.Vector3()); mats.set(mm, (mats.get(mm) || 0) + a.x * a.y * a.z) });
+                    console.log('materials', JSON.stringify([...mats].map(([m, v]) => [m.name, m.metalness, m.clearcoat, +v.toExponential(2)])));
+                    const body = [...mats].filter(([m]) => m.metalness > .3 || m.clearcoat > 0).sort((a, b) => b[1] - a[1])[0];
+                    if (body) { console.log('body paint guess:', body[0].name); if (BODY_COLOUR != null) { body[0].color.set(BODY_COLOUR); body[0].clearcoat = 1 } }
+                } catch (err) { console.warn('paint skipped', err.message) }
+                /* Headlight emissive for the landing flash */
+                try { model.traverse(o => { if (o.isMesh && /headlight/i.test(o.name + (o.parent ? o.parent.name : '')) && o.material && o.material.emissive) { o.material = o.material.clone(); o.material.emissive = new THREE.Color(0x9fd0ff); o.material.emissiveIntensity = 0; glowMats.push(o.material) } }) } catch (err) { console.warn('headlight skipped', err.message) }
+                /* Callout anchors in car space */
+                const h = box.max.y - box.min.y; carH = h; A1.position.set(0, h * .38, .575); A2.position.set(0, h * .85, -.5);
+                /* vertex samples (car space) for an accurate on-screen bounding box */
+                try { model.updateMatrixWorld(true); let tot = 0; meshes.forEach(m => tot += m.geometry.attributes.position.count); const st = Math.max(1, Math.floor(tot / 30000)), arr = [], v = new THREE.Vector3(); meshes.forEach(m => { const p = m.geometry.attributes.position; for (let i = 0; i < p.count; i += st) { v.fromBufferAttribute(p, i).applyMatrix4(m.matrixWorld); arr.push(v.x, v.y, v.z) } }); samples = new Float32Array(arr); console.log('bbox samples', samples.length / 3) } catch (err) { console.warn('sampling skipped', err.message) }
+                ready = true; resize(); dispatchEvent(new Event('hero-ready')); state.yaw = defYaw(); clearTimeout(failT); $('#load') && $('#load').remove(); try { intro() } catch (err) { console.error('intro failed', err.message); gsap.set(cv, { opacity: 1 }); state.z = 0; active = true; introText() } console.log('canvas', cv.clientWidth, cv.clientHeight, JSON.stringify(renderer.getSize(new THREE.Vector2())), 'car pos', JSON.stringify(root.position.toArray()), 'scale', root.scale.x, 'cam', JSON.stringify(cam.position.toArray()), 'bbox', JSON.stringify([box.min.toArray(), box.max.toArray()]))
+            }
+
+            const tmp = new THREE.Vector3();
+            function proj(o) { o.getWorldPosition(tmp); tmp.project(cam); return [(tmp.x + 1) / 2 * hero.clientWidth, (1 - tmp.y) / 2 * hero.clientHeight] }
+            function updateCallouts() {
+                if (!ready || !chipPos) return; const [x1, y1] = proj(A1), [x2, y2] = proj(A2), W = hero.clientWidth;
+                const c1 = $('#c1'), c2 = $('#c2');
+                Object.assign(c1.style, { left: chipPos.c1[0] + 'px', top: chipPos.c1[1] + 'px' }); Object.assign(c2.style, { left: chipPos.c2[0] + 'px', top: chipPos.c2[1] + 'px' });
+                const set = (l, d, ax, ay, bx, by) => { l.setAttribute('x1', ax); l.setAttribute('y1', ay); l.setAttribute('x2', bx); l.setAttribute('y2', by); d.setAttribute('cx', ax); d.setAttribute('cy', ay) };
+                set($('#l1'), $('#d1'), x1, y1, chipPos.c1[0] + c1.offsetWidth / 2, chipPos.c1[1] + c1.offsetHeight); set($('#l2'), $('#d2'), x2, y2, chipPos.c2[0] + c2.offsetWidth / 2, chipPos.c2[1] + c2.offsetHeight)
+            }
+
+            /* Intro: car drives in from the back, wheels spin then stop, nose dip, headlight flash */
+            function intro() {
+                state.z = -40; root.visible = true; const sp = { v: 40 }; scene.fog = new THREE.Fog(0x0a0c0f, 8, 30); const fog = { n: 3, f: 12 }; scene.fog.near = fog.n; scene.fog.far = fog.f;
+                gsap.set(cv, { opacity: 1 });
+                const tl = gsap.timeline({ onComplete: () => { active = true; gsap.to('#tip', { opacity: 0 }); scene.fog = null; console.log('intro done, car z', state.z, 'opacity', cv.style.opacity); console.log('FINAL wheels', JSON.stringify(wheelNodes.map(w => ({ n: w.name, pos: w.getWorldPosition(new THREE.Vector3()).toArray().map(v => +v.toFixed(3)), visible: w.visible })))); { const q = screenBox(), W = hero.clientWidth, H = hero.clientHeight; console.log('car box in panel px', JSON.stringify({ x: [q.minx * W | 0, q.maxx * W | 0], y: [q.miny * H | 0, q.maxy * H | 0], widthPct: +((q.maxx - q.minx) * 100).toFixed(1), bottomGapPx: H - (q.maxy * H | 0), clearsButtonsBy: Math.round(q.minx * W - Math.max(...[...hero.querySelectorAll('.btns a')].map(e => e.getBoundingClientRect().right - hero.getBoundingClientRect().left))), rightGapPx: W - (q.maxx * W | 0), leftPx: q.minx * W | 0, centrePct: [+(((q.minx + q.maxx) / 2) * 100).toFixed(1), +(((q.miny + q.maxy) / 2) * 100).toFixed(1)] })) } } });
+                tl.to(state, { z: 0, duration: 2, ease: 'expo.out' }, 0.3).to(fog, { n: 30, f: 80, duration: 2, ease: 'power2.out', onUpdate: () => { if (scene.fog) { scene.fog.near = fog.n; scene.fog.far = fog.f } } }, 0.3)
+                    .to(sp, { v: 0, duration: 2.2, ease: 'power3.out' }, 0.3)
+                    .to(state, { dip: .04, duration: .2, ease: 'power2.out' }, 2.0).to(state, { dip: 0, duration: .6, ease: 'power2.inOut' }, 2.2)
+                    .to('#shadow', { scaleX: 1.1, duration: .6 }, 2)
+                    .to(glowMats, { emissiveIntensity: 3, duration: .1, yoyo: true, repeat: 3 }, 2.1);
+                tl.eventCallback('onUpdate', () => { wheels.forEach(w => w.piv.rotateOnAxis(w.local, sp.v * .016)) });
+                tl.add(() => { introText(); gsap.to('.chip', { opacity: 1, duration: .6, stagger: .15 }); gsap.from('#l1,#l2', { opacity: 0, duration: .6 }) }, 2.2)
+            }
+
+            /* Render loop on the shared gsap.ticker: removed completely while the hero is off screen or the tab is hidden */
+            let running = false;
+            const tick = () => {
+                if (!ready) return;
+                car.rotation.set(state.dip * -1 + state.pitch, state.yaw, 0); car.position.set(0, 0, state.z); renderer.render(scene, cam); updateCallouts()
+            };
+            const syncLoop = () => {
+                const on = visible && !document.hidden; hero.classList.toggle('offscreen', !visible);
+                if (on === running) return; running = on;
+                on ? gsap.ticker.add(tick) : gsap.ticker.remove(tick);
+                console.log(on ? 'hero resumed' : 'hero paused')
+            };
+            new IntersectionObserver(e => { visible = e[e.length - 1].isIntersecting; syncLoop() }, { rootMargin: '0px', threshold: 0 }).observe(hero);
+            document.addEventListener('visibilitychange', syncLoop);
+            addEventListener('lowfx', () => resize());
+            syncLoop();
+
+            /* Interaction: click and drag only, drag starts only when the ray hits the car */
+            const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(); let lastYv = 0, lastX = 0, vel = 0, ret, idle, lastHover = 0;
+            function hits(e) { const r = cv.getBoundingClientRect(); ndc.set((e.clientX - r.left) / r.width * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1); ray.setFromCamera(ndc, cam); return ray.intersectObject(car, true).length > 0 }
+            let seen = false;
+            cv.addEventListener('pointerdown', e => { if (!active || !hits(e)) return; dragging = true; cv.setPointerCapture(e.pointerId); lastX = e.clientX; lastYv = e.clientY; ret && ret.kill(); clearTimeout(idle); cv.style.cursor = 'grabbing'; gsap.to('.chip,#l1,#l2,#d1,#d2', { opacity: 0, duration: .3 }); seen = true; $('#tip').style.opacity = 0 });
+            cv.addEventListener('pointermove', e => {
+                if (dragging) { state.yaw += (e.clientX - lastX) * .005; state.pitch = THREE.MathUtils.clamp(state.pitch + (e.clientY - lastYv) * .002, -.105, .105); lastX = e.clientX; lastYv = e.clientY; return }
+                if (!active || e.pointerType === 'touch' || performance.now() - lastHover < 80) return; lastHover = performance.now(); const h = hits(e); cv.style.cursor = h ? 'grab' : ''; const t = $('#tip'); if (h && !seen) { t.style.opacity = 1; t.style.left = e.clientX - hero.getBoundingClientRect().left + 16 + 'px'; t.style.top = e.clientY - hero.getBoundingClientRect().top + 16 + 'px' } else t.style.opacity = 0
+            });
+            const end = () => { if (!dragging) return; dragging = false; cv.style.cursor = ''; idle = setTimeout(() => { ret = gsap.to(state, { yaw: defYaw(), pitch: 0, duration: 1.2, ease: 'power3.inOut', onComplete: () => gsap.to('.chip,#l1,#l2,#d1,#d2', { opacity: 1, duration: .5 }) }) }, 2500) };
+            ['pointerup', 'pointercancel'].forEach(t => cv.addEventListener(t, end));
+            if (!reduce) gsap.to('#cv', { scale: 1.08, xPercent: 3, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
+
+            /* Dispose GPU resources on unload */
+            addEventListener('pagehide', () => { scene.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) { [].concat(o.material).forEach(m => { Object.values(m).forEach(v => v && v.isTexture && v.dispose()); m.dispose() }) } }); renderer.dispose() });
+            resize();
+        }
+    </script>
+</body>
+
+</html>
